@@ -116,7 +116,6 @@ public class HomeFragment extends Fragment {
                 json = gson.fromJson(parsedString, Schedule.class);
             }
             catch (Exception e){
-
             }
             try{
                 noschool = gson.fromJson(parsedString,Boolean.class);
@@ -152,7 +151,7 @@ public class HomeFragment extends Fragment {
                 out = StaticSchedules.normal();
             }
         }
-        else if (noschool != null && noschool){
+        if (noschool != null && noschool){
             out = null;
         }
         s = out;

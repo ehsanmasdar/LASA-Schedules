@@ -37,6 +37,7 @@ public class NotificationService extends Service{
     }
     public void serviceRunner(){
         final NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        Log.d("com.asdar.lasaschedules","Started Service!");
         Calendar cal = Calendar.getInstance();
         String parsedString = "";
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -74,7 +75,10 @@ public class NotificationService extends Service{
         if (json != null && json.getEvents() != null && json.getTimes() != null && json.getEvents().size() > 0 && json.getTimes().size() > 0){
             s = json;
         }
-        if (specialDay != null){
+        else if (noschool != null && noschool){
+            s = null;
+        }
+        else if (specialDay != null){
             if (specialDay.equals("latestart")){
                 s = StaticSchedules.latestart();
             }
@@ -85,9 +89,7 @@ public class NotificationService extends Service{
                 s = StaticSchedules.normal();
             }
         }
-        else if (noschool != null && noschool){
-            s = null;
-        }
+
         t = Executors.newSingleThreadScheduledExecutor();
         t.scheduleAtFixedRate(new Runnable() {
             @Override

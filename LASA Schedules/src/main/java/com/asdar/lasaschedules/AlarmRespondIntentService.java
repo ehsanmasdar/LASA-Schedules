@@ -43,13 +43,11 @@ public class AlarmRespondIntentService extends IntentService{
             return "";
         }
     }
-
     protected void onHandleIntent(Intent intent) {
         Log.d("com.asdar.lasaschedules", "Alarm reciever called, pulling new schedule");
         String parsedString = "";
         try {
-
-            URL url = new URL("http://ehsandev.com/school.json");
+            URL url = new URL("http://raw.ehsandev.com/school.json");
             URLConnection conn = url.openConnection();
 
             HttpURLConnection httpConn = (HttpURLConnection) conn;
@@ -75,7 +73,7 @@ public class AlarmRespondIntentService extends IntentService{
         if (sp.getBoolean("notification", true)) {
             getApplicationContext().stopService(service);
             getApplicationContext().startService(service);
-            } else {
+        } else {
             getApplicationContext().stopService(service);
         }
         try {
@@ -84,5 +82,5 @@ public class AlarmRespondIntentService extends IntentService{
         catch (Exception e){
 
         }
-     }
+    }
 }

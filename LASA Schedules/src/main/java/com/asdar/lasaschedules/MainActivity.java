@@ -102,7 +102,7 @@ public class MainActivity extends ActionBarActivity {
 
         }
         if (position == 3){
-            String url = "http://lasa2017.com";
+            String url = "http://lasa2017.com/schedules/";
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setData(Uri.parse(url));
             startActivity(i);
