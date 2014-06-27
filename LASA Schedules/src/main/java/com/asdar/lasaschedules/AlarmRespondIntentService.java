@@ -45,7 +45,7 @@ public class AlarmRespondIntentService extends IntentService{
     }
     protected void onHandleIntent(Intent intent) {
         Log.d("com.asdar.lasaschedules", "Alarm reciever called, pulling new schedule");
-        String parsedString = "";
+        String parsedString = null;
         try {
             URL url = new URL("http://raw.ehsandev.com/school.json");
             URLConnection conn = url.openConnection();

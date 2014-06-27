@@ -40,5 +40,6 @@ proguard_logs/
 .DS_Store
 supportfrag/
 libs/
+build/
 LocalApplication.java
 /LASA\ Schedules/build/

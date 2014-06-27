@@ -1,5 +1,6 @@
 package com.asdar.lasaschedules;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -24,7 +26,7 @@ import com.parse.Parse;
 import com.parse.ParseAnalytics;
 import com.parse.ParseInstallation;
 import com.parse.PushService;
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends FragmentActivity {
     String[] mDrawerArray;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -45,8 +47,8 @@ public class MainActivity extends ActionBarActivity {
                 R.layout.drawer_list_item, mDrawerArray));
         // Set the list's click listener
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
 
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
@@ -58,11 +60,11 @@ public class MainActivity extends ActionBarActivity {
                 R.string.drawer_close  /* "close drawer" description for accessibility */
         ) {
             public void onDrawerClosed(View view) {
-                getSupportActionBar().setTitle(mTitle);
+                getActionBar().setTitle(mTitle);
             }
 
             public void onDrawerOpened(View drawerView) {
-                getSupportActionBar().setTitle(R.string.app_name);
+                getActionBar().setTitle(R.string.app_name);
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
@@ -72,7 +74,7 @@ public class MainActivity extends ActionBarActivity {
         PushService.setDefaultPushCallback(this, MainActivity.class);
         SharedPreferences s = PreferenceManager.getDefaultSharedPreferences(this);
         if (s.getBoolean("updates",true)){
-            PushService.subscribe(getApplicationContext(), "updates", MainActivity.class, R.drawable.notification);
+            PushService.subscribe(getApplicationContext(), "updates", MainActivity.class, R.drawable.ic_stat_notification);
         }
         else{
             PushService.unsubscribe(this, "updates");
@@ -83,7 +85,7 @@ public class MainActivity extends ActionBarActivity {
         Intent intent = new Intent(getApplicationContext(), AlarmRespondIntentService.class);
         alarmIntent = PendingIntent.getService(getApplicationContext(), 0, intent, 0);
         alarmMgr.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 1,
-                AlarmManager.INTERVAL_HOUR, alarmIntent);
+                AlarmManager.INTERVAL_FIFTEEN_MINUTES, alarmIntent);
     }
     private void selectItem(int position) {
         // update the main content by replacing fragments
@@ -116,7 +118,7 @@ public class MainActivity extends ActionBarActivity {
     }
     public void setTitle(CharSequence title) {
         mTitle = title;
-        getSupportActionBar().setTitle(mTitle);
+        getActionBar().setTitle(mTitle);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.asdar.lasaschedules;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -7,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Binder;
+import android.os.Build;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
@@ -30,9 +32,17 @@ public class NotificationService extends Service{
     private Schedule s;
     private int id = 111111;
     private ScheduledExecutorService t;
-    NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+    NotificationCompat.Builder builder;
+    Notification.Builder noncompat;
     public int onStartCommand(Intent intent, int flags, int startID) {
        serviceRunner();
+       if (Build.VERSION.SDK_INT >= 20){
+           noncompat = new Notification.Builder(this);
+       }
+       else{
+           builder = new NotificationCompat.Builder(this);
+       }
+       Log.d("com.asdar.lasaschedules", Build.VERSION.SDK_INT + "");
        return 1;
     }
     public void serviceRunner(){
@@ -137,21 +147,44 @@ public class NotificationService extends Service{
     public void sendNotification(String place, String min) {
         Intent intent = new Intent(this, MainActivity.class);
         PendingIntent localPendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        builder.setContentTitle("In " + place);
-        builder.setSmallIcon(R.drawable.notification);
-        //Plural/singular
-        if (min.equals("1")){
-            builder.setContentText(min + " minute remains");
+        if(Build.VERSION.SDK_INT >= 20){
+            noncompat.setContentTitle("In " + place);
+            noncompat.setSmallIcon(R.drawable.ic_stat_notification);
+            //Plural/singular
+            if (min.equals("1")){
+                noncompat.setContentText(min + " minute remains");
+            }
+            else{
+                noncompat.setContentText(min + " minutes remain");
+            }
+            noncompat.setPriority(Notification.PRIORITY_HIGH);
+            noncompat.setContentIntent(localPendingIntent);
+            noncompat.setOngoing(true);
+            noncompat.setOnlyAlertOnce(true);
+            noncompat.setVisibility(Notification.VISIBILITY_PUBLIC);
+            noncompat.setColor(getResources().getColor(R.color.primary));
+            noncompat.setCategory(Notification.CATEGORY_ALARM);
+            NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            mNotificationManager.notify(id, noncompat.build());
         }
-        else{
-            builder.setContentText(min + " minutes remain");
+        else {
+            builder.setContentTitle("In " + place);
+            builder.setSmallIcon(R.drawable.ic_stat_notification);
+            //Plural/singular
+            if (min.equals("1")){
+                builder.setContentText(min + " minute remains");
+            }
+            else{
+                builder.setContentText(min + " minutes remain");
+            }
+            builder.setPriority(-2);
+            builder.setContentIntent(localPendingIntent);
+            builder.setOngoing(true);
+            builder.setOnlyAlertOnce(true);
+            NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            mNotificationManager.notify(id, builder.build());
         }
-        builder.setPriority(-2);
-        builder.setContentIntent(localPendingIntent);
-        builder.setOngoing(true);
-        builder.setOnlyAlertOnce(true);
-        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.notify(id, builder.build());
+
     }
 
     @Override
