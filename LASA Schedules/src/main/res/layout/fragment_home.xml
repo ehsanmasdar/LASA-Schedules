@@ -2,8 +2,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/purple"
-    android:weightSum="11">
+    android:background="@color/primary"
+    android:weightSum="10">
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
             android:gravity="center"
             android:textColor="@color/darkgray"
             android:singleLine="false"
-            android:textSize="22sp"
+            android:textSize="24sp"
             />
         <com.asdar.lasaschedules.RobotoTextView
             android:gravity="center"
@@ -26,8 +26,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/lightgray"
             android:id="@+id/current"
-            android:textSize="30sp"
-            android:textStyle="bold"
+            android:textSize="34sp"
           />
     </LinearLayout>
     <LinearLayout
@@ -43,7 +42,7 @@
             android:text="@string/starttimeText"
             android:textColor="@color/darkgray"
             android:singleLine="false"
-            android:textSize="22sp"
+            android:textSize="24sp"
             android:id="@+id/starttimeText"
             />
         <com.asdar.lasaschedules.RobotoTextView
@@ -52,16 +51,14 @@
             android:layout_height="wrap_content"
             android:textColor="@color/lightgray"
             android:id="@+id/startime"
-            android:textSize="30sp"
-            android:textStyle="bold"
+            android:textSize="34sp"
             />
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_weight="3"
+        android:layout_weight="2"
         android:layout_gravity="center">
         <com.asdar.lasaschedules.RobotoTextView
             android:layout_width="match_parent"
@@ -69,9 +66,9 @@
             android:textColor="@color/lightgray"
             android:gravity="center"
             android:id="@+id/remain"
-            android:textSize="100sp"
-            android:textStyle="bold"
-        />
+            android:textSize="112sp"
+            android:layout_marginTop="-20dp"
+            />
         <com.asdar.lasaschedules.RobotoTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -79,8 +76,8 @@
             android:textColor="@color/lightgray"
             android:id="@+id/minuteText"
             android:text="@string/minuteText"
-            android:textSize="30sp"
-            android:textStyle="bold"
+            android:textSize="34sp"
+            android:layout_marginTop="-20dp"
         />
     </LinearLayout>
     <LinearLayout
@@ -96,7 +93,7 @@
             android:text="@string/endtimeText"
             android:textColor="@color/darkgray"
             android:singleLine="false"
-            android:textSize="22sp"
+            android:textSize="24sp"
             android:id="@+id/endtimeText"
 
             />
@@ -106,8 +103,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/lightgray"
             android:id="@+id/endtime"
-            android:textSize="30sp"
-            android:textStyle="bold"
+            android:textSize="34sp"
             />
     </LinearLayout>
     <LinearLayout
@@ -123,7 +119,7 @@
             android:text="@string/nextText"
             android:textColor="@color/darkgray"
             android:singleLine="false"
-            android:textSize="22sp"
+            android:textSize="24sp"
             android:id="@+id/nextText"
             />
         <com.asdar.lasaschedules.RobotoTextView
@@ -132,8 +128,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/lightgray"
             android:id="@+id/next"
-            android:textSize="30sp"
-            android:textStyle="bold"
+            android:textSize="34sp"
             />
     </LinearLayout>
 

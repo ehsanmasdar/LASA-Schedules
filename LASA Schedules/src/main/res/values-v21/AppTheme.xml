@@ -9,5 +9,12 @@
         <item name="android:colorPrimaryDark">@color/primary_dark</item>
         <!--   theme UI controls like checkboxes and text fields -->
         <item name="android:colorAccent">@color/accent</item>
+        <!-- Navigation/Status bar color is primary dark -->
+        <item name="android:navigationBarColor">@color/primary_dark</item>
+        <item name="android:statusBarColor">@color/primary_dark</item>
+        <!-- No actionbar drop shadow -->
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- Highlight Color -->
+        <item name="android:colorControlHighlight">@color/accent_highlight</item>
     </style>
 </resources>

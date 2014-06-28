@@ -6,5 +6,6 @@
     <color name="white">#fff</color>
     <color name="primary">#9c27b0</color>
     <color name="primary_dark">#7b1fa2</color>
-    <color name="accent">#536dfe</color>
+    <color name="accent">#ff2d6f</color>
+    <color name="accent_highlight">#ff7997</color>
 </resources>

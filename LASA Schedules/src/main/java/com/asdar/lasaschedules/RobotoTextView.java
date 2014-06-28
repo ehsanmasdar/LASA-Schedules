@@ -3,6 +3,7 @@ package com.asdar.lasaschedules;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.TextView;
 /**
  * Created by Ehsan on 4/18/2014.
@@ -27,12 +28,15 @@ public class RobotoTextView extends TextView {
 
     public void setTypeface(Typeface tf, int style) {
         if (style == Typeface.NORMAL) {
-            super.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/robotolight.ttf"));
+            super.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Regular.ttf"));
         }
         else if (style == Typeface.ITALIC) {
-            super.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/robotoitalic.ttf"));
-        } else if (style == Typeface.BOLD) {
-            super.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/robotoregular.ttf"));
+            super.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Italic.ttf"));
+        } else if (style == StaticResources.ROBOTO_MEDIUM) {
+            super.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Medium.ttf"));
+        }
+        else if (style == StaticResources.ROBOTO_LIGHT){
+            super.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Light.ttf"));
         }
     }
 

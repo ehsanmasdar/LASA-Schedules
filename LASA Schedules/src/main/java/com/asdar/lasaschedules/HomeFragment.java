@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -53,12 +52,13 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void run() {
                     if (getView() != null) {
-                        final TextView current = (TextView) getView().findViewById(R.id.current);
-                        final TextView startime = (TextView) getView().findViewById(R.id.startime);
-                        final TextView remain = (TextView) getView().findViewById(R.id.remain);
-                        final TextView endtime = (TextView) getView().findViewById(R.id.endtime);
-                        final TextView next = (TextView) getView().findViewById(R.id.next);
-                        final TextView minuteText = (TextView) getView().findViewById(R.id.minuteText);
+                        final RobotoTextView current = (RobotoTextView) getView().findViewById(R.id.current);
+                        final RobotoTextView startime = (RobotoTextView) getView().findViewById(R.id.startime);
+                        final RobotoTextView remain = (RobotoTextView) getView().findViewById(R.id.remain);
+                        final RobotoTextView endtime = (RobotoTextView) getView().findViewById(R.id.endtime);
+                        final RobotoTextView next = (RobotoTextView) getView().findViewById(R.id.next);
+                        final RobotoTextView minuteText = (RobotoTextView) getView().findViewById(R.id.minuteText);
+                        remain.setTypeface(null, StaticResources.ROBOTO_LIGHT);
                         //Plurality
                         if (temp2.get(0).equals("1")) {
                             minuteText.setText("minute remaining");
@@ -204,16 +204,16 @@ public class HomeFragment extends Fragment {
 
     public void isClassOn(final boolean b) {
         if (getView() != null) {
-            final TextView starttimeText = (TextView) getView().findViewById(R.id.starttimeText);
-            final TextView inText = (TextView) getView().findViewById(R.id.inText);
-            final TextView endtimeText = (TextView) getView().findViewById(R.id.endtimeText);
-            final TextView nextText = (TextView) getView().findViewById(R.id.nextText);
-            final TextView minuteText = (TextView) getView().findViewById(R.id.minuteText);
-            final TextView current = (TextView) getView().findViewById(R.id.current);
-            final TextView startime = (TextView) getView().findViewById(R.id.startime);
-            final TextView remain = (TextView) getView().findViewById(R.id.remain);
-            final TextView endtime = (TextView) getView().findViewById(R.id.endtime);
-            final TextView next = (TextView) getView().findViewById(R.id.next);
+            final RobotoTextView starttimeText = (RobotoTextView) getView().findViewById(R.id.starttimeText);
+            final RobotoTextView inText = (RobotoTextView) getView().findViewById(R.id.inText);
+            final RobotoTextView endtimeText = (RobotoTextView) getView().findViewById(R.id.endtimeText);
+            final RobotoTextView nextText = (RobotoTextView) getView().findViewById(R.id.nextText);
+            final RobotoTextView minuteText = (RobotoTextView) getView().findViewById(R.id.minuteText);
+            final RobotoTextView current = (RobotoTextView) getView().findViewById(R.id.current);
+            final RobotoTextView startime = (RobotoTextView) getView().findViewById(R.id.startime);
+            final RobotoTextView remain = (RobotoTextView) getView().findViewById(R.id.remain);
+            final RobotoTextView endtime = (RobotoTextView) getView().findViewById(R.id.endtime);
+            final RobotoTextView next = (RobotoTextView) getView().findViewById(R.id.next);
             if (getActivity() != null) {
 
                 getActivity().runOnUiThread(new Runnable() {
