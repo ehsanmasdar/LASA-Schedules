@@ -48,8 +48,8 @@ public class ScheduleAdapter extends ArrayAdapter<ScheduleElement> {
             RobotoTextView range = (RobotoTextView) v.findViewById(R.id.range);
             RobotoTextView duration = (RobotoTextView) v.findViewById(R.id.duration);
             title.setTypeface(null, Typeface.NORMAL);
-            range.setTypeface(null, StaticResources.ROBOTO_MEDIUM);
-            duration.setTypeface(null, StaticResources.ROBOTO_MEDIUM);
+            range.setTypeface(null, Typeface.NORMAL);
+            duration.setTypeface(null, Typeface.NORMAL);
             title.setText(g.getEvent());
             range.setText(generateRange(position));
             duration.setText(generateDuration(position));

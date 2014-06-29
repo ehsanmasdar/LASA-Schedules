@@ -65,7 +65,7 @@ public class AlarmRespondIntentService extends IntentService{
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         if (parsedString != null){
             SharedPreferences.Editor e = sp.edit();
-            e.putString("jsonschedule",null );
+            e.putString("jsonschedule",parsedString);
             e.commit();
             Log.d("com.asdar.lasaschedules", "Got Schedule: " + parsedString);
         }
