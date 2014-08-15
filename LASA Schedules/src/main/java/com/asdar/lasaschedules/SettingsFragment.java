@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.support.v4.preference.PreferenceFragment;
 import android.util.Log;
 
@@ -23,6 +24,17 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         addPreferencesFromResource(R.xml.fragment_settings);
         Preference about= findPreference("about");
         about.setOnPreferenceClickListener(this);
+        Preference gr = findPreference("gr");
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        gr.setSummary(sp.getString("gr",""));
+        gr.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object o) {
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                preference.setSummary((String)o);
+                return true;
+            }
+        });
     }
     @Override
     public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
@@ -41,6 +53,11 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         if (key.equals("updates")&& prefs.getBoolean("notification",true) ){
             PushService.subscribe(getActivity().getApplicationContext(), "updates", MainActivity.class, R.drawable.notification);
             ParseInstallation.getCurrentInstallation().saveInBackground();
+        }
+        if (key.equals("gr")){
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            Intent intent = new Intent( getActivity().getApplicationContext(), AlarmRespondIntentService.class);
+            getActivity().startService(intent);
         }
     }
     @Override

@@ -45,9 +45,11 @@ public class AlarmRespondIntentService extends IntentService{
     }
     protected void onHandleIntent(Intent intent) {
         Log.d("com.asdar.lasaschedules", "Alarm reciever called, pulling new schedule");
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String parsedString = null;
         try {
-            URL url = new URL("http://raw.ehsandev.com/school.json");
+            URL url = new URL("http://ehsandev.com/lyschedules/fetchschedule.php?gr=" + sp.getString("gr","").trim());
+            Log.d("com.asdar.lasaschedules", url.toString());
             URLConnection conn = url.openConnection();
 
             HttpURLConnection httpConn = (HttpURLConnection) conn;
@@ -62,10 +64,9 @@ public class AlarmRespondIntentService extends IntentService{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         if (parsedString != null){
             SharedPreferences.Editor e = sp.edit();
-            e.putString("jsonschedule", parsedString);
+            e.putString("jsonschedule", parsedString.trim());
             e.commit();
             Log.d("com.asdar.lasaschedules", "Got Schedule: " + parsedString);
         }

@@ -116,17 +116,20 @@ public class HomeFragment extends Fragment {
                 json = gson.fromJson(parsedString, Schedule.class);
             }
             catch (Exception e){
+                e.printStackTrace();
             }
             try{
                 noschool = gson.fromJson(parsedString,Boolean.class);
             }
             catch (Exception e){
+                e.printStackTrace();
 
             }
             try{
                 specialDay = gson.fromJson(parsedString,String.class);
             }
             catch (Exception e){
+                e.printStackTrace();
 
             }
         }

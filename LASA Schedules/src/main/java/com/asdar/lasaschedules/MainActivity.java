@@ -1,7 +1,9 @@
 package com.asdar.lasaschedules;
 
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -14,11 +16,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import com.parse.Parse;
 import com.parse.ParseAnalytics;
@@ -79,6 +83,30 @@ public class MainActivity extends ActionBarActivity {
         }
         ParseInstallation.getCurrentInstallation().saveInBackground();
         ParseAnalytics.trackAppOpened(getIntent());
+        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        if (sp.getString("gr","") == ""){
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle("Welcome");
+            alert.setMessage("Enter your GR number to load your schedule.");
+
+// Set an EditText view to get user input
+            final EditText input = new EditText(this);
+            input.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+            alert.setView(input);
+            alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    SharedPreferences.Editor e = sp.edit();
+                    e.putString("gr", input.getText().toString());
+                    e.commit();
+                    Intent intent = new Intent(getApplicationContext(), AlarmRespondIntentService.class);
+                    startService(intent);
+                    Intent service = new Intent(getApplicationContext(), NotificationService.class);
+                }
+            });
+
+            alert.show();
+
+        }
         alarmMgr = (AlarmManager)getApplicationContext().getSystemService(getApplicationContext().ALARM_SERVICE);
         Intent intent = new Intent(getApplicationContext(), AlarmRespondIntentService.class);
         alarmIntent = PendingIntent.getService(getApplicationContext(), 0, intent, 0);
