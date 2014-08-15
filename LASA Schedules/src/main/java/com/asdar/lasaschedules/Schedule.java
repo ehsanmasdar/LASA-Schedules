@@ -85,4 +85,12 @@ public class Schedule {
     public void setEvents(ArrayList<String> events) {
         this.events = events;
     }
+    public ArrayList<ScheduleElement> toStaticScheduleFormat(){
+        ArrayList<ScheduleElement> s = new ArrayList<ScheduleElement>();
+        for (int i = 0; i< events.size();i++){
+            if(i != events.size()-1)
+                s.add(new ScheduleElement(times.get(i),times.get(i+1), events.get(i)));
+        }
+        return s;
+    }
 }

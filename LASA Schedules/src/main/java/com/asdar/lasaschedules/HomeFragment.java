@@ -247,18 +247,6 @@ public class HomeFragment extends Fragment {
     }
 
     private String getOutOfSchoolText() {
-        Calendar c = Calendar.getInstance();
-        int daysleft = (c.get(Calendar.DAY_OF_YEAR)-156);
-        if (daysleft < 0){
-            if (daysleft == -1){
-                return Math.abs(daysleft) + " day left till school is out!";
-            }
-            else{
-                return Math.abs(daysleft) + " days left till school is out!";
-            }
-        }
-        else {
-            return "School is out!";
-        }
+        return "No School";
     }
 }

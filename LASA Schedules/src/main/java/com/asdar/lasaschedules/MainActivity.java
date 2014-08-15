@@ -3,10 +3,12 @@ package com.asdar.lasaschedules;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -17,6 +19,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +31,12 @@ import com.parse.Parse;
 import com.parse.ParseAnalytics;
 import com.parse.ParseInstallation;
 import com.parse.PushService;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+
 public class MainActivity extends ActionBarActivity {
     String[] mDrawerArray;
     private DrawerLayout mDrawerLayout;
@@ -36,6 +45,7 @@ public class MainActivity extends ActionBarActivity {
     private CharSequence mTitle;
     private AlarmManager alarmMgr;
     private PendingIntent alarmIntent;
+    public ProgressDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +61,7 @@ public class MainActivity extends ActionBarActivity {
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-
+        getSupportActionBar().setDisplayShowHomeEnabled(false);
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
         mDrawerToggle = new ActionBarDrawerToggle(
@@ -100,7 +110,7 @@ public class MainActivity extends ActionBarActivity {
                     e.commit();
                     Intent intent = new Intent(getApplicationContext(), AlarmRespondIntentService.class);
                     startService(intent);
-                    Intent service = new Intent(getApplicationContext(), NotificationService.class);
+                    new ProgressdialogClass().execute();
                 }
             });
 
@@ -178,6 +188,58 @@ public class MainActivity extends ActionBarActivity {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
+    }
+    class ProgressdialogClass extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... unsued) {
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            String mon = getDayJson(sp,"MON");
+            String tue = getDayJson(sp,"TUE");
+            String wed = getDayJson(sp,"WED");
+            String thu = getDayJson(sp,"THU");
+            String fri = getDayJson(sp,"FRI");
+            SharedPreferences.Editor e = sp.edit();
+            e.putString("mon", mon);
+            e.putString("tue", tue);
+            e.putString("wed", wed);
+            e.putString("thu", thu);
+            e.putString("fri", fri);
+            e.commit();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String sResponse) {
+            dialog.dismiss();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            dialog = ProgressDialog.show(MainActivity.this, "Loading Schedules",
+                    "Please wait...", true);
+
+        }
+        public String getDayJson(SharedPreferences sp ,String day){
+            try {
+                URL url = new URL("http://ehsandev.com/lyschedules/fetchschedule.php?gr=" + sp.getString("gr","").trim()+"&dw=" + day);
+                Log.d("com.asdar.lasaschedules", url.toString());
+                URLConnection conn = url.openConnection();
+
+                HttpURLConnection httpConn = (HttpURLConnection) conn;
+                httpConn.setAllowUserInteraction(false);
+                httpConn.setInstanceFollowRedirects(true);
+                httpConn.setRequestMethod("GET");
+                httpConn.connect();
+
+                InputStream is = httpConn.getInputStream();
+                return AlarmRespondIntentService.convertinputStreamToString(is);
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
 
 }

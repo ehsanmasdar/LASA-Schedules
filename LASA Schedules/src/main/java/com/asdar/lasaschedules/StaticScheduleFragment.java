@@ -70,10 +70,12 @@ public class StaticScheduleFragment extends Fragment {
                 // probably ignore this event
             }
         };
-        actionBar.addTab(actionBar.newTab().setText("Normal").setTabListener(tabListener));
-        actionBar.addTab(actionBar.newTab().setText("Forum").setTabListener(tabListener));
-        actionBar.addTab(actionBar.newTab().setText("Late Start").setTabListener(tabListener));
-        actionBar.addTab(actionBar.newTab().setText("Pep Rally").setTabListener(tabListener));
+        actionBar.addTab(actionBar.newTab().setText("Monday").setTabListener(tabListener));
+        actionBar.addTab(actionBar.newTab().setText("Tuesday").setTabListener(tabListener));
+        actionBar.addTab(actionBar.newTab().setText("Wednesday").setTabListener(tabListener));
+        actionBar.addTab(actionBar.newTab().setText("Thursday").setTabListener(tabListener));
+        actionBar.addTab(actionBar.newTab().setText("Friday").setTabListener(tabListener));
+
     }
     public class Adapter extends FragmentPagerAdapter {
         public Adapter(FragmentManager fm) {
@@ -92,7 +94,7 @@ public class StaticScheduleFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return 4;
+            return 5;
         }
     }
 
