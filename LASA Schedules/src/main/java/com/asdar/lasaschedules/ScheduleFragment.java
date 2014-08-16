@@ -47,7 +47,7 @@ public class ScheduleFragment extends ListFragment {
                 s = removeEmpty(gson.fromJson(sp.getString("thu", ""), Schedule.class).toStaticScheduleFormat());
                 break;
             case 4:
-                s = removeEmpty(gson.fromJson(sp.getString("thu", ""), Schedule.class).toStaticScheduleFormat());
+                s = removeEmpty(gson.fromJson(sp.getString("fri", ""), Schedule.class).toStaticScheduleFormat());
                 break;
             default:
                 s = StaticSchedules.normalDisplay();
