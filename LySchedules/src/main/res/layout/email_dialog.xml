@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <EditText
+        android:id="@+id/emailtop"
+        android:layout_width="130sp"
+        android:layout_height="match_parent"
+        android:textSize="16sp"
+        android:inputType="text"/>
+    <TextView
+        android:id="@+id/staticemail"
+        android:text="\@lyceumschool.edu.pk"
+        android:inputType="textEmailAddress"
+        android:layout_width="wrap_content"
+        android:textSize="16sp"
+        android:layout_height="match_parent"/>
+</LinearLayout>

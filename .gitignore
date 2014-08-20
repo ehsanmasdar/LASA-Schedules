@@ -41,4 +41,5 @@ proguard_logs/
 supportfrag/
 libs/
 LocalApplication.java
-/LASA\ Schedules/build/
+LySchedules/build/
+build/
