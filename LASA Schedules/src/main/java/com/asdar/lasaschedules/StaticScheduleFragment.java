@@ -70,8 +70,9 @@ public class StaticScheduleFragment extends Fragment {
                 // probably ignore this event
             }
         };
+        actionBar.removeAllTabs();
         actionBar.addTab(actionBar.newTab().setText("Normal").setTabListener(tabListener));
-        actionBar.addTab(actionBar.newTab().setText("Forum").setTabListener(tabListener));
+        actionBar.addTab(actionBar.newTab().setText("Advisory").setTabListener(tabListener));
         actionBar.addTab(actionBar.newTab().setText("Late Start").setTabListener(tabListener));
         actionBar.addTab(actionBar.newTab().setText("Pep Rally").setTabListener(tabListener));
     }
