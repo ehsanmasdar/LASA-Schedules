@@ -43,3 +43,7 @@ libs/
 LocalApplication.java
 LySchedules/build/
 build/
+#Gradle Files
+gradle/
+gradlew
+gradlew.bat

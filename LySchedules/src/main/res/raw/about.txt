@@ -1,8 +1,8 @@
-<h3>LASA Schedules</h3>
-Version 1.1<br>
+<h3>LySchedules</h3>
+Version 1.0<br>
 Copyright 2014<br><br>
 Android coding and design by Ehsan Asdar<br>
 Original concept and iOS App By Oscar Newman <br>
 Notification and app icons courtesy of icons8<br><br>
-Special thank you to LASA 2017 Student Council<br><br>
-lasa2017.com/schedules/<br>
+Special thank you to The Lyceum<br><br>
+http://www.lyceumschool.edu.pk/<br>

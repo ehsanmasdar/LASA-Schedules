@@ -1,5 +1,7 @@
 package com.asdar.lyschedules;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -53,8 +55,14 @@ public class Schedule {
                 result.add(events.get(i+1));
             }
             else{
-                result.add(times.get(i).toString());
-                result.add(events.get(i));
+                if ((i+1)< times.size()-1 && (times.get(i).equals( times.get(i+1)))){
+                    result.add(times.get(i).toString());
+                    result.add(events.get(i+1));
+                }
+                else{
+                    result.add(times.get(i).toString());
+                    result.add(events.get(i));
+                }
             }
         }
         else{

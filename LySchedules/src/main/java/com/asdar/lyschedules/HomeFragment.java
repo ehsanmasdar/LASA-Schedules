@@ -94,32 +94,27 @@ public class HomeFragment extends Fragment {
     public static void setSchedule (Context context){
         Schedule out;
         final Calendar c = Calendar.getInstance();
-        String parsedString = "";
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        parsedString = sp.getString("jsonschedule", null);
         Gson gson = new Gson();
-        Schedule json = null;
-        Boolean noschool =  null;
-        String specialDay = null;
-        if (parsedString != null){
-            try{
-                json = gson.fromJson(parsedString, Schedule.class);
-            }
-            catch (Exception e){
-            }
-            try{
-                noschool = gson.fromJson(parsedString,Boolean.class);
-            }
-            catch (Exception e){
-            }
-            try{
-                specialDay = gson.fromJson(parsedString,String.class);
-            }
-            catch (Exception e){
-            }
+        Schedule monjson = gson.fromJson(sp.getString("mon",null), Schedule.class);
+        Schedule tuejson = gson.fromJson(sp.getString("tue",null), Schedule.class);
+        Schedule wedjson = gson.fromJson(sp.getString("wed",null), Schedule.class);
+        Schedule thujson = gson.fromJson(sp.getString("thu",null), Schedule.class);
+        Schedule frijson = gson.fromJson(sp.getString("fri",null), Schedule.class);
+        if (monjson != null && monjson.getEvents() != null && monjson.getTimes() != null && monjson.getEvents().size() > 0 && monjson.getTimes().size() > 0 && c.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY){
+            out = monjson;
         }
-        if (json != null && json.getEvents() != null && json.getTimes() != null && json.getEvents().size() > 0 && json.getTimes().size() > 0){
-            out = json;
+        else if (tuejson != null && tuejson.getEvents() != null && tuejson.getTimes() != null && tuejson.getEvents().size() > 0 && tuejson.getTimes().size() > 0 && c.get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY){
+            out = tuejson;
+        }
+        else if (wedjson != null && wedjson.getEvents() != null && wedjson.getTimes() != null && wedjson.getEvents().size() > 0 && wedjson.getTimes().size() > 0 && c.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY){
+            out = wedjson;
+        }
+        else  if (thujson != null && thujson.getEvents() != null && thujson.getTimes() != null && thujson.getEvents().size() > 0 && thujson.getTimes().size() > 0 && c.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY){
+            out = thujson;
+        }
+        else if (frijson != null && frijson.getEvents() != null && frijson.getTimes() != null && frijson.getEvents().size() > 0 && frijson.getTimes().size() > 0 && c.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY){
+            out = frijson;
         }
         else {
             out = null;

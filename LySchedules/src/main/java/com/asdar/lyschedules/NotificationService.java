@@ -27,69 +27,48 @@ import java.util.concurrent.TimeUnit;
 
 public class NotificationService extends Service{
     private final IBinder binder = new NotificationBinder();
-    private Schedule s;
     private int id = 111111;
     private ScheduledExecutorService t;
     NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+    public static Schedule s;
     public int onStartCommand(Intent intent, int flags, int startID) {
        serviceRunner();
        return 1;
     }
+    public static void setSchedule (Context context){
+        Schedule out;
+        final Calendar c = Calendar.getInstance();
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        Gson gson = new Gson();
+        Schedule monjson = gson.fromJson(sp.getString("mon",null), Schedule.class);
+        Schedule tuejson = gson.fromJson(sp.getString("tue",null), Schedule.class);
+        Schedule wedjson = gson.fromJson(sp.getString("wed",null), Schedule.class);
+        Schedule thujson = gson.fromJson(sp.getString("thu",null), Schedule.class);
+        Schedule frijson = gson.fromJson(sp.getString("fri",null), Schedule.class);
+        if (monjson != null && monjson.getEvents() != null && monjson.getTimes() != null && monjson.getEvents().size() > 0 && monjson.getTimes().size() > 0 && c.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY){
+            out = monjson;
+        }
+        else if (tuejson != null && tuejson.getEvents() != null && tuejson.getTimes() != null && tuejson.getEvents().size() > 0 && tuejson.getTimes().size() > 0 && c.get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY){
+            out = tuejson;
+        }
+        else if (wedjson != null && wedjson.getEvents() != null && wedjson.getTimes() != null && wedjson.getEvents().size() > 0 && wedjson.getTimes().size() > 0 && c.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY){
+            out = wedjson;
+        }
+        else  if (thujson != null && thujson.getEvents() != null && thujson.getTimes() != null && thujson.getEvents().size() > 0 && thujson.getTimes().size() > 0 && c.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY){
+            out = thujson;
+        }
+        else if (frijson != null && frijson.getEvents() != null && frijson.getTimes() != null && frijson.getEvents().size() > 0 && frijson.getTimes().size() > 0 && c.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY){
+            out = frijson;
+        }
+        else {
+            out = null;
+        }
+        s = out;
+    }
     public void serviceRunner(){
         final NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Log.d("com.asdar.lasaschedules","Started Service!");
-        Calendar cal = Calendar.getInstance();
-        String parsedString = "";
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        parsedString = sp.getString("jsonschedule", null);
-        Gson gson = new Gson();
-        Schedule json = null;
-        Boolean noschool =  null;
-        String specialDay = null;
-        if (parsedString != null){
-            try{
-                json = gson.fromJson(parsedString, Schedule.class);
-            }
-            catch (Exception e){
-
-            }
-            try{
-                noschool = gson.fromJson(parsedString,Boolean.class);
-            }
-            catch (Exception e){
-
-            }
-            try{
-                specialDay = gson.fromJson(parsedString,String.class);
-            }
-            catch (Exception e){
-
-            }
-        }
-        if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY){
-            s = StaticSchedules.forum();
-        }
-        else{
-            s = StaticSchedules.normal();
-        }
-        if (json != null && json.getEvents() != null && json.getTimes() != null && json.getEvents().size() > 0 && json.getTimes().size() > 0){
-            s = json;
-        }
-        else if (noschool != null && noschool){
-            s = null;
-        }
-        else if (specialDay != null){
-            if (specialDay.equals("latestart")){
-                s = StaticSchedules.latestart();
-            }
-            if (specialDay.equals("peprally")){
-                s = StaticSchedules.peprally();
-            }
-            if (specialDay.equals("normal")){
-                s = StaticSchedules.normal();
-            }
-        }
-
+        setSchedule(getApplicationContext());
         t = Executors.newSingleThreadScheduledExecutor();
         t.scheduleAtFixedRate(new Runnable() {
             @Override
@@ -119,7 +98,7 @@ public class NotificationService extends Service{
                     }
               }
             }
-        }, 1, 3, TimeUnit.SECONDS);
+        }, 1, 1, TimeUnit.SECONDS);
     }
     @Override
     public IBinder onBind(Intent intent) {

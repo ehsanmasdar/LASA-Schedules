@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v4.app.DialogFragment;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -46,29 +47,19 @@ public class AlarmRespondIntentService extends IntentService{
     protected void onHandleIntent(Intent intent) {
         Log.d("com.asdar.lasaschedules", "Alarm reciever called, pulling new schedule");
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String parsedString = null;
-        try {
-            URL url = new URL("http://ehsandev.com/lyschedules/fetchschedule.php?email=" + sp.getString("gr","").trim());
-            Log.d("com.asdar.lasaschedules", url.toString());
-            URLConnection conn = url.openConnection();
-
-            HttpURLConnection httpConn = (HttpURLConnection) conn;
-            httpConn.setAllowUserInteraction(false);
-            httpConn.setInstanceFollowRedirects(true);
-            httpConn.setRequestMethod("GET");
-            httpConn.connect();
-
-            InputStream is = httpConn.getInputStream();
-            parsedString = convertinputStreamToString(is);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        if (parsedString != null){
+        String mon = getDayJson(sp,"MON");
+        String tue = getDayJson(sp,"TUE");
+        String wed = getDayJson(sp,"WED");
+        String thu = getDayJson(sp,"THU");
+        String fri = getDayJson(sp,"FRI");
+        if (mon != null && tue != null && wed != null && thu != null && fri != null && !mon.contains("nostudent")){
             SharedPreferences.Editor e = sp.edit();
-            e.putString("jsonschedule", parsedString.trim());
+            e.putString("mon", mon);
+            e.putString("tue", tue);
+            e.putString("wed", wed);
+            e.putString("thu", thu);
+            e.putString("fri", fri);
             e.commit();
-            Log.d("com.asdar.lasaschedules", "Got Schedule: " + parsedString);
         }
         Intent service = new Intent(getApplicationContext(), NotificationService.class);
         if (sp.getBoolean("notification", true)) {
@@ -80,8 +71,29 @@ public class AlarmRespondIntentService extends IntentService{
         try {
             HomeFragment.setSchedule(getApplicationContext());
         }
-        catch (Exception e){
+        catch (Exception ex){
 
         }
+    }
+    public String getDayJson(SharedPreferences sp ,String day){
+        try {
+            URL url = new URL("http://ehsandev.com/lyschedules/fetchschedule.php?email=" + sp.getString("gr","").trim()+"&dw=" + day);
+            Log.d("com.asdar.lasaschedules", url.toString());
+            URLConnection conn = url.openConnection();
+
+            HttpURLConnection httpConn = (HttpURLConnection) conn;
+            httpConn.setAllowUserInteraction(false);
+            httpConn.setInstanceFollowRedirects(true);
+            httpConn.setRequestMethod("GET");
+            httpConn.connect();
+
+            InputStream is = httpConn.getInputStream();
+            return convertinputStreamToString(is);
+
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 }

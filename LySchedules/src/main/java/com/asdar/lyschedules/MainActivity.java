@@ -112,9 +112,7 @@ public class MainActivity extends ActionBarActivity {
                     startService(intent);
                 }
             });
-
             alert.show();
-
         }
         alarmMgr = (AlarmManager)getApplicationContext().getSystemService(getApplicationContext().ALARM_SERVICE);
         Intent intent = new Intent(getApplicationContext(), AlarmRespondIntentService.class);
@@ -260,5 +258,4 @@ public class MainActivity extends ActionBarActivity {
             return null;
         }
     }
-
 }
