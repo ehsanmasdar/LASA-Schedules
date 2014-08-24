@@ -5,14 +5,10 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Binder;
 import android.os.IBinder;
-import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -39,57 +35,7 @@ public class NotificationService extends Service{
         final NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Log.d("com.asdar.lasaschedules","Started Service!");
         Calendar cal = Calendar.getInstance();
-        String parsedString = "";
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        parsedString = sp.getString("jsonschedule", null);
-        Gson gson = new Gson();
-        Schedule json = null;
-        Boolean noschool =  null;
-        String specialDay = null;
-        if (parsedString != null){
-            try{
-                json = gson.fromJson(parsedString, Schedule.class);
-            }
-            catch (Exception e){
-
-            }
-            try{
-                noschool = gson.fromJson(parsedString,Boolean.class);
-            }
-            catch (Exception e){
-
-            }
-            try{
-                specialDay = gson.fromJson(parsedString,String.class);
-            }
-            catch (Exception e){
-
-            }
-        }
-        if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY){
-            s = StaticSchedules.forum();
-        }
-        else{
-            s = StaticSchedules.normal();
-        }
-        if (json != null && json.getEvents() != null && json.getTimes() != null && json.getEvents().size() > 0 && json.getTimes().size() > 0){
-            s = json;
-        }
-        else if (noschool != null && noschool){
-            s = null;
-        }
-        else if (specialDay != null){
-            if (specialDay.equals("latestart")){
-                s = StaticSchedules.latestart();
-            }
-            if (specialDay.equals("peprally")){
-                s = StaticSchedules.peprally();
-            }
-            if (specialDay.equals("normal")){
-                s = StaticSchedules.normal();
-            }
-        }
-
+        s = Resources.getSchedule(getApplicationContext());
         t = Executors.newSingleThreadScheduledExecutor();
         t.scheduleAtFixedRate(new Runnable() {
             @Override
@@ -119,7 +65,7 @@ public class NotificationService extends Service{
                     }
               }
             }
-        }, 1, 3, TimeUnit.SECONDS);
+        }, 1, 1, TimeUnit.SECONDS);
     }
     @Override
     public IBinder onBind(Intent intent) {

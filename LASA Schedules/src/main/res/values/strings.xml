@@ -13,10 +13,16 @@
     <string name="starttimeText">started at</string>
     <string name="inText">currently in</string>
     <string name="Settings">Settings</string>
+    <string name="today">Full Schedule</string>
+    <string name="title_activity_today">Full Schedule</string>
+    <string name="showcase_title">Today\'s Schedule</string>
+    <string name="showcase_details">View the full schedule for the current day.</string>
     <string-array name="drawer_array">
         <item>Today</item>
         <item>All Schedules</item>
         <item>Settings</item>
         <item>Website</item>
     </string-array>
+
+
 </resources>

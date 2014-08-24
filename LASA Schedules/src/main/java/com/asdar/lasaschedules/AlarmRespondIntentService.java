@@ -77,7 +77,7 @@ public class AlarmRespondIntentService extends IntentService{
             getApplicationContext().stopService(service);
         }
         try {
-            HomeFragment.setSchedule(getApplicationContext());
+            HomeFragment.refresh(getApplicationContext());
         }
         catch (Exception e){
 

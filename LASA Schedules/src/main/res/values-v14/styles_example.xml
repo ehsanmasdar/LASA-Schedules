@@ -32,7 +32,7 @@
         
                 <!-- Light.DarkActionBar specific -->
         <item name="android:actionBarWidgetTheme">@style/Theme.Example.Widget</item>
-
+        <item name="showcaseViewStyle">@style/CustomShowcaseTheme</item>
     </style>
 
     <style name="ActionBar.Solid.Example" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
