@@ -12,6 +12,7 @@
 # generated files
 bin/
 gen/
+/LASA\ Schedules/build/
 build/
 
 # Local configuration file (sdk path, etc)
@@ -42,6 +43,7 @@ proguard_logs/
 #Libs
 supportfrag/
 libs/
+<<<<<<< HEAD
 showcaseview/
 #Other
 LocalApplication.java
