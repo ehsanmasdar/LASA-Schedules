@@ -44,8 +44,7 @@ public class ScheduleFragment extends ListFragment {
                 s = removeEmpty(gson.fromJson(sp.getString("fri", ""), Schedule.class).toStaticScheduleFormat());
                 break;
             default:
-                s = StaticSchedules.normalDisplay();
-                break;
+                s = (new Schedule(new ArrayList<Integer>(),new ArrayList<String>()).toStaticScheduleFormat());
         }
         ScheduleAdapter a = new ScheduleAdapter(getActivity(),R.layout.schedule_element_row,s);
         setListAdapter(a);

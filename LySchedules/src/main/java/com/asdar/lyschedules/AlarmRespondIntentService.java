@@ -1,8 +1,11 @@
 package com.asdar.lyschedules;
 
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
@@ -46,34 +49,42 @@ public class AlarmRespondIntentService extends IntentService{
     }
     protected void onHandleIntent(Intent intent) {
         Log.d("com.asdar.lasaschedules", "Alarm reciever called, pulling new schedule");
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String mon = getDayJson(sp,"MON");
-        String tue = getDayJson(sp,"TUE");
-        String wed = getDayJson(sp,"WED");
-        String thu = getDayJson(sp,"THU");
-        String fri = getDayJson(sp,"FRI");
-        if (mon != null && tue != null && wed != null && thu != null && fri != null && !mon.contains("nostudent")){
-            SharedPreferences.Editor e = sp.edit();
-            e.putString("mon", mon);
-            e.putString("tue", tue);
-            e.putString("wed", wed);
-            e.putString("thu", thu);
-            e.putString("fri", fri);
-            e.commit();
-        }
-        Intent service = new Intent(getApplicationContext(), NotificationService.class);
-        if (sp.getBoolean("notification", true)) {
-            getApplicationContext().stopService(service);
-            getApplicationContext().startService(service);
-        } else {
-            getApplicationContext().stopService(service);
-        }
-        try {
-            HomeFragment.setSchedule(getApplicationContext());
-        }
-        catch (Exception ex){
+        ConnectivityManager cm =
+                (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        if (isConnected){
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            String mon = getDayJson(sp,"MON");
+            String tue = getDayJson(sp,"TUE");
+            String wed = getDayJson(sp,"WED");
+            String thu = getDayJson(sp,"THU");
+            String fri = getDayJson(sp,"FRI");
+            if (mon != null && tue != null && wed != null && thu != null && fri != null && !mon.contains("nostudent")){
+                SharedPreferences.Editor e = sp.edit();
+                e.putString("mon", mon);
+                e.putString("tue", tue);
+                e.putString("wed", wed);
+                e.putString("thu", thu);
+                e.putString("fri", fri);
+                e.commit();
+            }
+            Intent service = new Intent(getApplicationContext(), NotificationService.class);
+            if (sp.getBoolean("notification", true)) {
+                getApplicationContext().stopService(service);
+                getApplicationContext().startService(service);
+            } else {
+                getApplicationContext().stopService(service);
+            }
+            try {
+                HomeFragment.setSchedule(getApplicationContext());
+            }
+            catch (Exception ex){
 
+            }
         }
+
     }
     public String getDayJson(SharedPreferences sp ,String day){
         try {

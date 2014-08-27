@@ -1,8 +1,11 @@
 package com.asdar.lyschedules;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -103,23 +106,45 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     class ProgressdialogClass extends AsyncTask<Void, Void, Boolean> {
         ProgressDialog dialog;
         boolean success;
+
         @Override
         protected Boolean doInBackground(Void... unsued) {
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
-            String mon = getDayJson(sp, "MON");
-            String tue = getDayJson(sp, "TUE");
-            String wed = getDayJson(sp, "WED");
-            String thu = getDayJson(sp, "THU");
-            String fri = getDayJson(sp, "FRI");
-            if (mon.contains("nostudent")){
+            ConnectivityManager cm =
+                    (ConnectivityManager) getActivity().getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+            boolean isConnected = activeNetwork != null &&
+                    activeNetwork.isConnectedOrConnecting();
+            if (isConnected) {
+                String mon = getDayJson(sp, "MON");
+                String tue = getDayJson(sp, "TUE");
+                String wed = getDayJson(sp, "WED");
+                String thu = getDayJson(sp, "THU");
+                String fri = getDayJson(sp, "FRI");
+                if (mon.contains("nostudent")) {
+                    success = false;
+                    DialogFragment alert = (DialogFragment) ErrorThrower
+                            .newInstance(
+                                    "Schedule not found. \n Please make sure you have typed your email correctly and try again.",
+                                    false);
+                    alert.show(getActivity().getSupportFragmentManager(), "loaderror");
+                } else {
+                    SharedPreferences.Editor e = sp.edit();
+                    e.putString("mon", mon);
+                    e.putString("tue", tue);
+                    e.putString("wed", wed);
+                    e.putString("thu", thu);
+                    e.putString("fri", fri);
+                    e.commit();
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            tempPref.setSummary((String) newgr);
+                        }
+                    });
+                }
+            } else {
                 success = false;
-                DialogFragment alert = (DialogFragment) ErrorThrower
-                        .newInstance(
-                                "Schedule not found. \n Please make sure you have typed your email correctly and try again.",
-                                false);
-                alert.show(getActivity().getSupportFragmentManager(), "loaderror");
-            }
-            else if (success == false){
                 //Do nothing
                 DialogFragment alert = (DialogFragment) ErrorThrower
                         .newInstance(
@@ -127,34 +152,18 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                                 false);
                 alert.show(getActivity().getSupportFragmentManager(), "interneterror");
             }
-            else {
-                SharedPreferences.Editor e = sp.edit();
-                e.putString("mon", mon);
-                e.putString("tue", tue);
-                e.putString("wed", wed);
-                e.putString("thu", thu);
-                e.putString("fri", fri);
-                e.commit();
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        tempPref.setSummary((String) newgr);
-                    }
-                });
-            }
             return success;
         }
 
         @Override
         protected void onPostExecute(Boolean sResponse) {
             dialog.dismiss();
-            SharedPreferences.Editor e  = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
+            SharedPreferences.Editor e = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
             if (success) {
-                e.putString("gr",newgr);
+                e.putString("gr", newgr);
                 tempPref.setSummary(newgr);
-            }
-            else{
-                e.putString("gr",oldgr);
+            } else {
+                e.putString("gr", oldgr);
                 tempPref.setSummary(oldgr);
             }
             e.commit();
