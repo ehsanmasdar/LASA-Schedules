@@ -96,7 +96,12 @@ public class MainActivity extends ActionBarActivity {
         ParseInstallation.getCurrentInstallation().saveInBackground();
         ParseAnalytics.trackAppOpened(getIntent());
         final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        if (sp.getString("gr", "").equals("")) {
+        if (sp.getString("gr", "").equals("")
+                || sp.getString("mon", "nostudent").contains("nostudent")
+                || sp.getString("tue", "nostudent").contains("nostudent")
+                || sp.getString("wed", "nostudent").contains("nostudent")
+                || sp.getString("thu", "nostudent").contains("nostudent")
+                || sp.getString("fri", "nostudent").contains("nostudent")) {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setTitle("Welcome");
             alert.setMessage("Enter your email to load your schedule");
