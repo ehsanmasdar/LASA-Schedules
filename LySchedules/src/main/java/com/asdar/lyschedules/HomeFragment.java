@@ -91,36 +91,7 @@ public class HomeFragment extends Fragment {
         }
         return output;
     }
-    public static void setSchedule (Context context){
-        Schedule out;
-        final Calendar c = Calendar.getInstance();
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        Gson gson = new Gson();
-        Schedule monjson = gson.fromJson(sp.getString("mon",null), Schedule.class);
-        Schedule tuejson = gson.fromJson(sp.getString("tue",null), Schedule.class);
-        Schedule wedjson = gson.fromJson(sp.getString("wed",null), Schedule.class);
-        Schedule thujson = gson.fromJson(sp.getString("thu",null), Schedule.class);
-        Schedule frijson = gson.fromJson(sp.getString("fri",null), Schedule.class);
-        if (monjson != null && monjson.getEvents() != null && monjson.getTimes() != null && monjson.getEvents().size() > 0 && monjson.getTimes().size() > 0 && c.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY){
-            out = monjson;
-        }
-        else if (tuejson != null && tuejson.getEvents() != null && tuejson.getTimes() != null && tuejson.getEvents().size() > 0 && tuejson.getTimes().size() > 0 && c.get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY){
-            out = tuejson;
-        }
-        else if (wedjson != null && wedjson.getEvents() != null && wedjson.getTimes() != null && wedjson.getEvents().size() > 0 && wedjson.getTimes().size() > 0 && c.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY){
-            out = wedjson;
-        }
-        else  if (thujson != null && thujson.getEvents() != null && thujson.getTimes() != null && thujson.getEvents().size() > 0 && thujson.getTimes().size() > 0 && c.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY){
-            out = thujson;
-        }
-        else if (frijson != null && frijson.getEvents() != null && frijson.getTimes() != null && frijson.getEvents().size() > 0 && frijson.getTimes().size() > 0 && c.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY){
-            out = frijson;
-        }
-        else {
-            out = null;
-        }
-        s = out;
-    }
+
     public void onResume() {
         super.onResume();
         if (getActivity() != null) {
@@ -133,7 +104,7 @@ public class HomeFragment extends Fragment {
                 getActivity().stopService(service);
             }
         }
-        setSchedule(getActivity());
+        s = Resources.setSchedule(getActivity());
         ScheduledExecutorService t = Executors.newSingleThreadScheduledExecutor();
         t.scheduleAtFixedRate(new Runnable() {
             @Override
@@ -210,5 +181,9 @@ public class HomeFragment extends Fragment {
 
     private String getOutOfSchoolText() {
         return "No School";
+    }
+
+    public static void update(Context context) {
+        s = Resources.setSchedule(context);
     }
 }

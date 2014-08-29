@@ -96,7 +96,7 @@ public class MainActivity extends ActionBarActivity {
         ParseInstallation.getCurrentInstallation().saveInBackground();
         ParseAnalytics.trackAppOpened(getIntent());
         final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        if (sp.getString("gr", "") == "") {
+        if (sp.getString("gr", "").equals("")) {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setTitle("Welcome");
             alert.setMessage("Enter your email to load your schedule");
@@ -121,7 +121,7 @@ public class MainActivity extends ActionBarActivity {
         Intent intent = new Intent(getApplicationContext(), AlarmRespondIntentService.class);
         alarmIntent = PendingIntent.getService(getApplicationContext(), 0, intent, 0);
         alarmMgr.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 1,
-                AlarmManager.INTERVAL_HOUR, alarmIntent);
+                AlarmManager.INTERVAL_HALF_HOUR, alarmIntent);
     }
 
     private void selectItem(int position) {
