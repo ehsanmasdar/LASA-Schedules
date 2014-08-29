@@ -26,28 +26,36 @@ public class ScheduleFragment extends ListFragment {
         Gson gson = new Gson();
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
         //Schedule json = gson.fromJson(parsedString, Schedule.class);
-
-        switch (schedule){
-            case 0:
-                s = removeEmpty(gson.fromJson(sp.getString("mon", ""), Schedule.class).toStaticScheduleFormat());
-                break;
-            case 1:
-                s = removeEmpty(gson.fromJson(sp.getString("tue", ""), Schedule.class).toStaticScheduleFormat());
-                break;
-            case 2:
-                s = removeEmpty(gson.fromJson(sp.getString("wed", ""), Schedule.class).toStaticScheduleFormat());
-                break;
-            case 3:
-                s = removeEmpty(gson.fromJson(sp.getString("thu", ""), Schedule.class).toStaticScheduleFormat());
-                break;
-            case 4:
-                s = removeEmpty(gson.fromJson(sp.getString("fri", ""), Schedule.class).toStaticScheduleFormat());
-                break;
-            default:
-                s = (new Schedule(new ArrayList<Integer>(),new ArrayList<String>()).toStaticScheduleFormat());
+        try {
+            switch (schedule) {
+                case 0:
+                    s = removeEmpty(gson.fromJson(sp.getString("mon", ""), Schedule.class).toStaticScheduleFormat());
+                    break;
+                case 1:
+                    s = removeEmpty(gson.fromJson(sp.getString("tue", ""), Schedule.class).toStaticScheduleFormat());
+                    break;
+                case 2:
+                    s = removeEmpty(gson.fromJson(sp.getString("wed", ""), Schedule.class).toStaticScheduleFormat());
+                    break;
+                case 3:
+                    s = removeEmpty(gson.fromJson(sp.getString("thu", ""), Schedule.class).toStaticScheduleFormat());
+                    break;
+                case 4:
+                    s = removeEmpty(gson.fromJson(sp.getString("fri", ""), Schedule.class).toStaticScheduleFormat());
+                    break;
+                default:
+                    s = (new Schedule(new ArrayList<Integer>(), new ArrayList<String>()).toStaticScheduleFormat());
+            }
+            ScheduleAdapter a = new ScheduleAdapter(getActivity(),R.layout.schedule_element_row,s);
+            setListAdapter(a);
         }
-        ScheduleAdapter a = new ScheduleAdapter(getActivity(),R.layout.schedule_element_row,s);
-        setListAdapter(a);
+        catch (Exception e){
+            e.printStackTrace();
+            Schedule fallback = new Schedule(new ArrayList<Integer>(), new ArrayList<String>());
+            ScheduleAdapter a = new ScheduleAdapter(getActivity(),R.layout.schedule_element_row,fallback.toStaticScheduleFormat());
+            setListAdapter(a);
+        }
+
     }
 
     public ArrayList<ScheduleElement> removeEmpty(ArrayList<ScheduleElement> arr) {
