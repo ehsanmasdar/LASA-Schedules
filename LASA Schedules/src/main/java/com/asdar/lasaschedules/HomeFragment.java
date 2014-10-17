@@ -124,7 +124,6 @@ public class HomeFragment extends Fragment {
                 getActivity().stopService(service);
             }
         }
-        s = Resources.getSchedule(getActivity());
         ScheduledExecutorService t = Executors.newSingleThreadScheduledExecutor();
         t.scheduleAtFixedRate(new Runnable() {
             @Override
@@ -135,6 +134,7 @@ public class HomeFragment extends Fragment {
                        temp2.get(1) = End time of current class
                        temp2.get(2) = Next Class start time
                      */
+                s = Resources.getSchedule(getActivity());
                 final Calendar c = Calendar.getInstance();
                 if (s == null){
                     isClassOn(false);

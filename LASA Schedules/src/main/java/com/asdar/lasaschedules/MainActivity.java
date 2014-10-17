@@ -68,7 +68,6 @@ public class MainActivity extends ActionBarActivity {
         if (savedInstanceState == null){
             selectItem(0);
         }
-        PushService.setDefaultPushCallback(this, MainActivity.class);
         SharedPreferences s = PreferenceManager.getDefaultSharedPreferences(this);
         if (s.getBoolean("updates",true)){
             PushService.subscribe(getApplicationContext(), "updates", MainActivity.class, R.drawable.notification);

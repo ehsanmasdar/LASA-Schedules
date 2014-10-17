@@ -3,6 +3,7 @@ package com.asdar.lasaschedules;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -27,18 +28,17 @@ public class Resources {
                 json = gson.fromJson(parsedString, Schedule.class);
             }
             catch (Exception e){
+                e.printStackTrace();
             }
             try{
                 noschool = gson.fromJson(parsedString,Boolean.class);
             }
             catch (Exception e){
-
             }
             try{
                 specialDay = gson.fromJson(parsedString,String.class);
             }
             catch (Exception e){
-
             }
         }
         if (c.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY) {

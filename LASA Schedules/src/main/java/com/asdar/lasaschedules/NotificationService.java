@@ -21,21 +21,20 @@ import java.util.concurrent.TimeUnit;
  */
 
 
-public class NotificationService extends Service{
+public class NotificationService extends Service {
     private final IBinder binder = new NotificationBinder();
     private Schedule s;
     private int id = 111111;
     private ScheduledExecutorService t;
     NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+
     public int onStartCommand(Intent intent, int flags, int startID) {
-       serviceRunner();
-       return 1;
+        serviceRunner();
+        return 1;
     }
-    public void serviceRunner(){
+
+    public void serviceRunner() {
         final NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        Log.d("com.asdar.lasaschedules","Started Service!");
-        Calendar cal = Calendar.getInstance();
-        s = Resources.getSchedule(getApplicationContext());
         t = Executors.newSingleThreadScheduledExecutor();
         t.scheduleAtFixedRate(new Runnable() {
             @Override
@@ -46,31 +45,30 @@ public class NotificationService extends Service{
                        temp2.get(1) = End time of current class
                        temp2.get(2) = Next Class start time
                      */
+                s = Resources.getSchedule(getApplicationContext());
                 Calendar c = Calendar.getInstance();
                 ArrayList<String> temp1 = s.getCurrent();
                 ArrayList<String> temp2 = s.getTimeTillNext();
-              if (s == null){
-                  mNotificationManager.cancel(id);
-              }
-              else if ((c.get(Calendar.DAY_OF_WEEK)== Calendar.SATURDAY) || (c.get(Calendar.DAY_OF_WEEK)== Calendar.SUNDAY)){
+                if (s == null) {
                     mNotificationManager.cancel(id);
-                }
-              else{
+                } else if ((c.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) || (c.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)) {
+                    mNotificationManager.cancel(id);
+                } else {
                     if (temp1.size() == 0 || temp2.size() == 0) {
-
                         mNotificationManager.cancel(id);
-                    }
-                    else {
+                    } else {
                         sendNotification(temp1.get(0), temp2.get(0));
                     }
-              }
+                }
             }
         }, 1, 1, TimeUnit.SECONDS);
     }
+
     @Override
     public IBinder onBind(Intent intent) {
         return this.binder;
     }
+
     public class NotificationBinder extends Binder {
         public NotificationBinder() {
         }
@@ -86,10 +84,9 @@ public class NotificationService extends Service{
         builder.setContentTitle("In " + place);
         builder.setSmallIcon(R.drawable.notification);
         //Plural/singular
-        if (min.equals("1")){
+        if (min.equals("1")) {
             builder.setContentText(min + " minute remains");
-        }
-        else{
+        } else {
             builder.setContentText(min + " minutes remain");
         }
         builder.setPriority(-2);
