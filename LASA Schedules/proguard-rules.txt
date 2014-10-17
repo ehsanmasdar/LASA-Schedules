@@ -16,10 +16,6 @@
 #   public *;
 #}
 -keep class com.parse.** { *; }
-<<<<<<< HEAD
--libraryjars /libs/gson-2.2.4.jar
--dontwarn com.facebook.**
-=======
 -libraryjars ./libs/gson-2.2.4.jar
 -dontwarn com.facebook.**
 ##---------------Begin: proguard configuration for Gson  ----------
@@ -38,4 +34,3 @@
 -keep class com.asdar.lasaschedules.Schedule { *; }
 
 ##---------------End: proguard configuration for Gson  ----------
->>>>>>> master
