@@ -44,6 +44,9 @@ proguard_logs/
 supportfrag/
 libs/
 <<<<<<< HEAD
+build/
+LocalApplication.java
+/LASA\ Schedules/build/
 showcaseview/
 #Other
 LocalApplication.java

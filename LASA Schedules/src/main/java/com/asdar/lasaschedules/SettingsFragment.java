@@ -39,7 +39,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             PushService.unsubscribe(getActivity().getApplicationContext(), "updates");
         }
         if (key.equals("updates")&& prefs.getBoolean("notification",true) ){
-            PushService.subscribe(getActivity().getApplicationContext(), "updates", MainActivity.class, R.drawable.notification);
+            PushService.subscribe(getActivity().getApplicationContext(), "updates", MainActivity.class, R.drawable.ic_stat_notification);
             ParseInstallation.getCurrentInstallation().saveInBackground();
         }
     }

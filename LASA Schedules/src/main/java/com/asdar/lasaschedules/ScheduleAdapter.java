@@ -6,6 +6,7 @@ package com.asdar.lasaschedules;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +47,9 @@ public class ScheduleAdapter extends ArrayAdapter<ScheduleElement> {
             RobotoTextView title = (RobotoTextView) v.findViewById(R.id.title);
             RobotoTextView range = (RobotoTextView) v.findViewById(R.id.range);
             RobotoTextView duration = (RobotoTextView) v.findViewById(R.id.duration);
+            title.setTypeface(null, Typeface.NORMAL);
+            range.setTypeface(null, Typeface.NORMAL);
+            duration.setTypeface(null, Typeface.NORMAL);
             title.setText(g.getEvent());
             range.setText(generateRange(position));
             duration.setText(generateDuration(position));

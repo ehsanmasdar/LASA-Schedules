@@ -32,6 +32,7 @@ public class AboutDialog extends Dialog{
         Pattern icons8matcher = Pattern.compile("icons8");
         String icons8 = "http://icons8.com/?";
         Linkify.addLinks(about, icons8matcher, icons8);
+        setTitle("");
     }
 
 
