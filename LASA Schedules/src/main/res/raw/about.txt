@@ -1,5 +1,5 @@
 <h3>LASA Schedules</h3>
-Version 1.1<br>
+Version 1.3<br>
 Copyright 2014<br><br>
 Android coding and design by Ehsan Asdar<br>
 Original concept and iOS App By Oscar Newman <br>

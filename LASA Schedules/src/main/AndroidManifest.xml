@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.asdar.lasaschedules">
-    <supports-screens android:largeScreens="true"/>
-    <supports-screens android:xlargeScreens="true"/>
+    package="com.asdar.lasaschedules" >
+
+    <supports-screens android:largeScreens="true" />
+    <supports-screens android:xlargeScreens="true" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -10,60 +12,81 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <permission android:protectionLevel="signature" android:name="com.asdar.lasaschedules.permission.C2D_MESSAGE" />
+
+    <permission
+        android:name="com.asdar.lasaschedules.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
     <uses-permission android:name="com.asdar.lasaschedules.permission.C2D_MESSAGE" />
+
     <application
+        android:name=".LocalApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_appicon"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
         android:name="LocalApplication">
         <activity
-            android:name="MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.asdar.lasaschedules.SettingsActivity"
+            android:name=".SettingsActivity"
             android:label="@string/Settings" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.asdar.lasaschedules.MainActivity" />
         </activity>
+
         <service
-            android:name="com.asdar.lasaschedules.NotificationService"
+            android:name=".NotificationService"
             android:enabled="true"
             android:exported="false"
             android:label="NotificationService" />
-        <!---Parse Push Notifications-->
+        <!-- -Parse Push Notifications -->
         <service android:name="com.parse.PushService" />
-        <receiver android:name="com.parse.ParseBroadcastReceiver">
+
+        <receiver android:name="com.parse.ParseBroadcastReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
-        <receiver android:name="com.parse.GcmBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND">
+        <receiver
+            android:name="com.parse.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
                 <category android:name="com.asdar.lasaschedules" />
             </intent-filter>
         </receiver>
-        <receiver android:name="NotificationServiceReciever" >
+        <receiver android:name=".NotificationServiceReciever" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
         <service
-            android:name="com.asdar.lasaschedules.AlarmRespondIntentService"
+            android:name=".AlarmRespondIntentService"
             android:exported="false"
             android:label="@string/app_name" >
         </service>
+
+        <activity
+            android:name=".TodayActivity"
+            android:label="@string/title_activity_today" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
     </application>
+
 </manifest>

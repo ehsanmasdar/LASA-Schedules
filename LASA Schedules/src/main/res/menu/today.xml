@@ -1,6 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.asdar.lasaschedules.MainActivity" >
-
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_fullcal"
+        app:showAsAction="always|withText"
+        android:orderInCategory="102"
+        android:title="@string/today"
+        android:icon="@drawable/ic_action_go_to_today"/>
 </menu>

@@ -12,6 +12,8 @@
 # generated files
 bin/
 gen/
+/LASA\ Schedules/build/
+build/
 
 # Local configuration file (sdk path, etc)
 local.properties
@@ -38,8 +40,13 @@ proguard_logs/
 /local.properties
 /.idea/workspace.xml
 .DS_Store
+#Libs
 supportfrag/
 libs/
+<<<<<<< HEAD
 build/
 LocalApplication.java
 /LASA\ Schedules/build/
+showcaseview/
+#Other
+LocalApplication.java

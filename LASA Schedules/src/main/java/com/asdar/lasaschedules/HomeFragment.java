@@ -1,27 +1,25 @@
 package com.asdar.lasaschedules;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.gson.Gson;
+import com.espian.showcaseview.ShowcaseView;
+import com.espian.showcaseview.targets.ActionItemTarget;
+import com.espian.showcaseview.targets.ActionViewTarget;
+import com.espian.showcaseview.targets.ViewTarget;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.Executors;
@@ -35,6 +33,12 @@ public class HomeFragment extends Fragment {
    public static Schedule s;
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         return inflater.inflate(R.layout.fragment_home, container, false);
@@ -43,6 +47,14 @@ public class HomeFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        if (sp.getBoolean("firstlaunch", true)){
+            ActionItemTarget target = new ActionItemTarget(getActivity(),R.id.action_fullcal);
+            ShowcaseView.insertShowcaseView(target, getActivity(), R.string.showcase_title, R.string.showcase_details);
+            SharedPreferences.Editor e = sp.edit();
+            e.putBoolean("firstlaunch", false);
+            e.commit();
+        }
 
     }
 
@@ -101,61 +113,6 @@ public class HomeFragment extends Fragment {
         }
         return output;
     }
-    public static void setSchedule (Context context){
-        Schedule out;
-        final Calendar c = Calendar.getInstance();
-        String parsedString = "";
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        parsedString = sp.getString("jsonschedule", null);
-        Gson gson = new Gson();
-        Schedule json = null;
-        Boolean noschool =  null;
-        String specialDay = null;
-        if (parsedString != null){
-            try{
-                json = gson.fromJson(parsedString, Schedule.class);
-            }
-            catch (Exception e){
-            }
-            try{
-                noschool = gson.fromJson(parsedString,Boolean.class);
-            }
-            catch (Exception e){
-
-            }
-            try{
-                specialDay = gson.fromJson(parsedString,String.class);
-            }
-            catch (Exception e){
-
-            }
-        }
-        if (c.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY) {
-            //Forum
-            out = StaticSchedules.forum();
-        } else {
-            //Default Schedule
-            out = StaticSchedules.normal();
-        }
-        if (json != null && json.getEvents() != null && json.getTimes() != null && json.getEvents().size() > 0 && json.getTimes().size() > 0){
-            out = json;
-        }
-        if (specialDay != null){
-            if (specialDay.equals("latestart")){
-                out = StaticSchedules.latestart();
-            }
-            if (specialDay.equals("peprally")){
-                out = StaticSchedules.peprally();
-            }
-            if (specialDay.equals("normal")){
-                out = StaticSchedules.normal();
-            }
-        }
-        if (noschool != null && noschool){
-            out = null;
-        }
-        s = out;
-    }
     public void onResume() {
         super.onResume();
         if (getActivity() != null) {
@@ -168,7 +125,6 @@ public class HomeFragment extends Fragment {
                 getActivity().stopService(service);
             }
         }
-        setSchedule(getActivity());
         ScheduledExecutorService t = Executors.newSingleThreadScheduledExecutor();
         t.scheduleAtFixedRate(new Runnable() {
             @Override
@@ -179,6 +135,7 @@ public class HomeFragment extends Fragment {
                        temp2.get(1) = End time of current class
                        temp2.get(2) = Next Class start time
                      */
+                s = Resources.getSchedule(getActivity());
                 final Calendar c = Calendar.getInstance();
                 if (s == null){
                     isClassOn(false);
@@ -242,20 +199,33 @@ public class HomeFragment extends Fragment {
             }
         }
     }
-
+    public static void refresh(Context c){
+        s = Resources.getSchedule(c);
+    }
     private String getOutOfSchoolText() {
-        Calendar c = Calendar.getInstance();
-        int daysleft = (c.get(Calendar.DAY_OF_YEAR)-156);
-        if (daysleft < 0){
-            if (daysleft == -1){
-                return Math.abs(daysleft) + " day left till school is out!";
-            }
-            else{
-                return Math.abs(daysleft) + " days left till school is out!";
-            }
-        }
-        else {
-            return "School is out!";
+            return "No School";
+    }
+    @Override
+    public void onCreateOptionsMenu(
+            Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.today, menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_fullcal:
+                Schedule s = Resources.getSchedule(getActivity());
+                if (s != null){
+                    Intent intent = new Intent(getActivity(), TodayActivity.class);
+                    startActivity(intent);
+                }
+                else {
+                     Toast.makeText(getActivity(), "No Active Schedule", Toast.LENGTH_LONG).show();
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }
