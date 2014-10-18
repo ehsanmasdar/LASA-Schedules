@@ -42,11 +42,7 @@ proguard_logs/
 .DS_Store
 #Libs
 supportfrag/
-libs/
-<<<<<<< HEAD
-build/
-LocalApplication.java
-/LASA\ Schedules/build/
 showcaseview/
+libs/
 #Other
 LocalApplication.java
