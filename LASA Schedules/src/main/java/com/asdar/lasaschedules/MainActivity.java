@@ -1,8 +1,8 @@
 package com.asdar.lasaschedules;
 
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -23,7 +22,7 @@ import android.widget.ListView;
 import com.parse.ParseAnalytics;
 import com.parse.ParseInstallation;
 import com.parse.PushService;
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends ActionBarActivity  {
     String[] mDrawerArray;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -79,7 +78,7 @@ public class MainActivity extends FragmentActivity {
         }
         ParseInstallation.getCurrentInstallation().saveInBackground();
         ParseAnalytics.trackAppOpened(getIntent());
-        alarmMgr = (AlarmManager)getApplicationContext().getSystemService(getApplicationContext().ALARM_SERVICE);
+        alarmMgr = (AlarmManager)getApplicationContext().getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(getApplicationContext(), AlarmRespondIntentService.class);
         alarmIntent = PendingIntent.getService(getApplicationContext(), 0, intent, 0);
         alarmMgr.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 1,
@@ -116,14 +115,14 @@ public class MainActivity extends FragmentActivity {
     }
     public void setTitle(CharSequence title) {
         mTitle = title;
-        getActionBar().setTitle(mTitle);
+        getSupportActionBar().setTitle(mTitle);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        //int id = item.getItemId();
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }

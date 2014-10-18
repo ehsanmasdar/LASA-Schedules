@@ -10,7 +10,6 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,7 +27,6 @@ public class NotificationService extends Service {
     private Schedule s;
     private int id = 111111;
     private ScheduledExecutorService t;
-<<<<<<< HEAD
     NotificationCompat.Builder builder;
     Notification.Builder noncompat;
     public int onStartCommand(Intent intent, int flags, int startID) {
@@ -39,7 +37,6 @@ public class NotificationService extends Service {
        else{
            builder = new NotificationCompat.Builder(this);
        }
-       Log.d("com.asdar.lasaschedules", Build.VERSION.SDK_INT + "");
        return 1;
     }
 
@@ -91,7 +88,6 @@ public class NotificationService extends Service {
     public void sendNotification(String place, String min) {
         Intent intent = new Intent(this, MainActivity.class);
         PendingIntent localPendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-<<<<<<< HEAD
         if(Build.VERSION.SDK_INT >= 20){
             noncompat.setContentTitle("In " + place);
             noncompat.setSmallIcon(R.drawable.ic_stat_notification);
@@ -128,15 +124,6 @@ public class NotificationService extends Service {
             builder.setOnlyAlertOnce(true);
             NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             mNotificationManager.notify(id, builder.build());
-=======
-        builder.setContentTitle("In " + place);
-        builder.setSmallIcon(R.drawable.notification);
-        //Plural/singular
-        if (min.equals("1")) {
-            builder.setContentText(min + " minute remains");
-        } else {
-            builder.setContentText(min + " minutes remain");
->>>>>>> master
         }
 
     }

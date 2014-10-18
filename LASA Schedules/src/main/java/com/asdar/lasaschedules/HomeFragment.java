@@ -12,14 +12,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.espian.showcaseview.ShowcaseView;
 import com.espian.showcaseview.targets.ActionItemTarget;
-import com.espian.showcaseview.targets.ActionViewTarget;
-import com.espian.showcaseview.targets.ViewTarget;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.Executors;
@@ -49,8 +43,8 @@ public class HomeFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
         if (sp.getBoolean("firstlaunch", true)){
-            ActionItemTarget target = new ActionItemTarget(getActivity(),R.id.action_fullcal);
-            ShowcaseView.insertShowcaseView(target, getActivity(), R.string.showcase_title, R.string.showcase_details);
+            //ActionItemTarget target = new ActionItemTarget(getActivity(),R.id.action_fullcal);
+            //ShowcaseView.insertShowcaseView(target, getActivity(), R.string.showcase_title, R.string.showcase_details);
             SharedPreferences.Editor e = sp.edit();
             e.putBoolean("firstlaunch", false);
             e.commit();

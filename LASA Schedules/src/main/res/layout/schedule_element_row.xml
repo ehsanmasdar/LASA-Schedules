@@ -3,13 +3,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <!-- Roboto Medium -->
     <com.asdar.lasaschedules.RobotoTextView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:id="@+id/title"
-        android:textStyle="bold"
         android:gravity="center_vertical"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:layout_marginLeft="15dp"
     />
     <LinearLayout
@@ -22,11 +22,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/range"
-            android:textSize="18sp"/>
+            android:textSize="16sp"/>
         <com.asdar.lasaschedules.RobotoTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/duration"
-            android:textSize="18sp"/>
+            android:textSize="16sp"/>
     </LinearLayout>
 </LinearLayout>

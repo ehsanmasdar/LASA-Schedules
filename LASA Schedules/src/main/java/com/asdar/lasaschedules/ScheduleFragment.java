@@ -1,13 +1,7 @@
 package com.asdar.lasaschedules;
 
 import android.os.Bundle;
-import android.provider.CalendarContract;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
@@ -45,5 +39,4 @@ public class ScheduleFragment extends ListFragment {
         ScheduleAdapter a = new ScheduleAdapter(getActivity(),R.layout.schedule_element_row,s);
         setListAdapter(a);
     }
-
 }
