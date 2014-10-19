@@ -7,6 +7,7 @@ Libraries
 LASA Schedules makes use of the following libraries
 * [android-support-v4-preferencefragment] (https://github.com/kolavar/android-support-v4-preferencefragment)
 * [ShowcaseView](https://github.com/amlcurran/Showcaseview)
+* [PagerSlidingTabStrip](https://github.com/astuetz/PagerSlidingTabStrip)
 
 This work is licensed under the [GPL v3 License](http://choosealicense.com/licenses/gpl-v3/). See license file for full text.   
 Copyright (C) 2014 Ehsan Asdar
