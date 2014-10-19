@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- inherit from the material theme -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="Theme.AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Main theme colors -->
         <!--   your app's branding color (for the app bar) -->
         <item name="colorPrimary">@color/primary</item>
@@ -13,5 +12,9 @@
         <item name="android:windowContentOverlay">@null</item>
         <!-- Highlight Color -->
         <item name="colorControlHighlight">@color/accent_highlight</item>
+    </style>
+    <!-- inherit from the material theme -->
+    <style name="Theme.AppTheme.Base" parent="Theme.AppTheme">
+
     </style>
 </resources>

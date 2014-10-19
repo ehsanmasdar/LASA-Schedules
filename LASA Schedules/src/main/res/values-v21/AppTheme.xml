@@ -1,20 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- inherit from the material theme -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Main theme colors -->
-        <!--   your app's branding color (for the app bar) -->
-        <item name="colorPrimary">@color/primary</item>
-        <!--   darker variant of colorPrimary (for status bar, contextual app bars) -->
-        <item name="colorPrimaryDark">@color/primary_dark</item>
-        <!--   theme UI controls like checkboxes and text fields -->
-        <item name="colorAccent">@color/accent</item>
+    <style name="Theme.AppTheme.Base" parent="Theme.AppTheme">
         <!-- Navigation/Status bar color is primary dark -->
         <item name="android:navigationBarColor">@color/primary</item>
         <item name="android:statusBarColor">@color/primary_dark</item>
-        <!-- No actionbar drop shadow -->
-        <item name="android:windowContentOverlay">@null</item>
-        <!-- Highlight Color -->
-        <item name="colorControlHighlight">@color/accent_highlight</item>
     </style>
 </resources>

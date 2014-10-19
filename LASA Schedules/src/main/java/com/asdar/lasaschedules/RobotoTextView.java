@@ -32,11 +32,9 @@ public class RobotoTextView extends TextView {
         }
         else if (style == Typeface.ITALIC) {
             super.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Italic.ttf"));
-        } else if (style == StaticResources.ROBOTO_MEDIUM) {
-            super.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Medium.ttf"));
         }
-        else if (style == StaticResources.ROBOTO_LIGHT){
-            super.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Light.ttf"));
+        else if (style == Typeface.BOLD) {
+            super.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Medium.ttf"));
         }
     }
 

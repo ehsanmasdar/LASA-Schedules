@@ -1,12 +1,10 @@
 package com.asdar.lasaschedules;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.support.v4.preference.PreferenceFragment;
-import android.util.Log;
 
 import com.parse.ParseInstallation;
 import com.parse.PushService;
