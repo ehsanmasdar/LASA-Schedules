@@ -42,5 +42,8 @@ proguard_logs/
 supportfrag/
 showcaseview/
 libs/
+gradle/
+.gradle/
+gradlew*
 #Other
 LocalApplication.java

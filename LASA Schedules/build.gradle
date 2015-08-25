@@ -1,23 +1,23 @@
 apply plugin: 'android'
 
+apply plugin: 'com.android.application'
+
 android {
     compileSdkVersion 21
-    buildToolsVersion '20.0.0'
+    buildToolsVersion "21.1.1"
+
     defaultConfig {
+        applicationId "com.asdar.lasaschedules"
         minSdkVersion 8
         targetSdkVersion 21
-        versionCode 14
-        versionName '1.4'
+        versionCode 15
+        versionName "1.5"
     }
     buildTypes {
         release {
-            runProguard true
-            zipAlign true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-    }
-    productFlavors {
-
     }
 }
 

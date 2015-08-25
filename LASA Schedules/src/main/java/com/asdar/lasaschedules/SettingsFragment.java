@@ -5,9 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.support.v4.preference.PreferenceFragment;
-
-import com.parse.ParseInstallation;
-import com.parse.PushService;
+import android.util.Log;
 
 /**
  * Created by Ehsan on 4/2/14.
@@ -34,11 +32,9 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             getActivity().startService(service);
         }
         if (key.equals("updates")&& !prefs.getBoolean("updates",true) ){
-            PushService.unsubscribe(getActivity().getApplicationContext(), "updates");
         }
         if (key.equals("updates")&& prefs.getBoolean("notification",true) ){
-            PushService.subscribe(getActivity().getApplicationContext(), "updates", MainActivity.class, R.drawable.ic_stat_notification);
-            ParseInstallation.getCurrentInstallation().saveInBackground();
+
         }
     }
     @Override

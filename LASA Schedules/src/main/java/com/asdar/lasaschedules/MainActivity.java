@@ -20,9 +20,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.parse.ParseAnalytics;
-import com.parse.ParseInstallation;
-import com.parse.PushService;
 public class MainActivity extends ActionBarActivity  {
     String[] mDrawerArray;
     private DrawerLayout mDrawerLayout;
@@ -73,14 +70,7 @@ public class MainActivity extends ActionBarActivity  {
             selectItem(0);
         }
         SharedPreferences s = PreferenceManager.getDefaultSharedPreferences(this);
-        if (s.getBoolean("updates",true)){
-            PushService.subscribe(getApplicationContext(), "updates", MainActivity.class, R.drawable.ic_stat_notification);
-        }
-        else{
-            PushService.unsubscribe(this, "updates");
-        }
-        ParseInstallation.getCurrentInstallation().saveInBackground();
-        ParseAnalytics.trackAppOpened(getIntent());
+
         alarmMgr = (AlarmManager)getApplicationContext().getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(getApplicationContext(), AlarmRespondIntentService.class);
         alarmIntent = PendingIntent.getService(getApplicationContext(), 0, intent, 0);

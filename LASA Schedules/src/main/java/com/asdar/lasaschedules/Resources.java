@@ -28,7 +28,6 @@ public class Resources {
                 json = gson.fromJson(parsedString, Schedule.class);
             }
             catch (Exception e){
-                e.printStackTrace();
             }
             try{
                 noschool = gson.fromJson(parsedString,Boolean.class);
