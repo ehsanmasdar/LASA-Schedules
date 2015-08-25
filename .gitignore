@@ -35,8 +35,6 @@ proguard_logs/
 .idea/
 
 #Android Studio .gitignore
-.gradle
-*.gradle
 /local.properties
 /.idea/workspace.xml
 .DS_Store

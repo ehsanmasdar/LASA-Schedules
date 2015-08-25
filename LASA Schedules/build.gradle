@@ -1,0 +1,31 @@
+apply plugin: 'android'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion '20.0.0'
+    defaultConfig {
+        minSdkVersion 8
+        targetSdkVersion 21
+        versionCode 14
+        versionName '1.4'
+    }
+    buildTypes {
+        release {
+            runProguard true
+            zipAlign true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+    productFlavors {
+
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':supportfrag')
+    compile project(':library')
+    compile 'com.android.support:support-v4:21.0.0'
+    compile 'com.android.support:appcompat-v7:21.0.0'
+    compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
+}
