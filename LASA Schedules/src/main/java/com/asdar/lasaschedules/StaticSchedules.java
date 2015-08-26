@@ -139,11 +139,11 @@ public class StaticSchedules {
     }
     public static ArrayList<ScheduleElement> peprallyDisplay() {
         ArrayList<ScheduleElement> s = new ArrayList<ScheduleElement>();
-        s.add(new ScheduleElement(815,945, "Period 1/5"));
-        s.add(new ScheduleElement(950,1125, "Period 2/6"));
-        s.add(new ScheduleElement(1130,1300,"Period 3/7"));
+        s.add(new ScheduleElement(815,945, "Period 0A/0B"));
+        s.add(new ScheduleElement(950,1125, "Period 1/5"));
+        s.add(new ScheduleElement(1130,1300,"Period 2/6"));
         s.add(new ScheduleElement(1300,1350, "Lunch"));
-        s.add(new ScheduleElement(1355,1520, "Period 4/8"));
+        s.add(new ScheduleElement(1355,1520, "Period 3/7"));
         s.add(new ScheduleElement(1520,1600, "Pep Rally"));
         return s;
     }

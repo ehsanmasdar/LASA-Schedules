@@ -10,7 +10,7 @@ android {
         applicationId "com.asdar.lasaschedules"
         minSdkVersion 8
         targetSdkVersion 21
-        versionCode 15
+        versionCode 16
         versionName "1.5"
     }
     buildTypes {
