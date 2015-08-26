@@ -44,11 +44,11 @@ public class StaticSchedules {
         ArrayList<Integer> times = new ArrayList<Integer>();
         ArrayList<String> events = new ArrayList<String>();
         times.add(815);
-        events.add("Period 0A/0B");
+        events.add("Period 0A");
         times.add(945);
         events.add("Passing Period");
         times.add(950);
-        events.add("Period 1/5");
+        events.add("Period 1");
         times.add(1120);
         events.add("Passing Period");
         times.add(1125);
@@ -56,13 +56,13 @@ public class StaticSchedules {
         times.add(1155);
         events.add("Passing Period");
         times.add(1200);
-        events.add("Period 2/6");
+        events.add("Period 2");
         times.add(1330);
         events.add("Lunch");
         times.add(1405);
         events.add("Passing Period");
         times.add(1410);
-        events.add("Period 3/7");
+        events.add("Period 3");
         times.add(1540);
         events.add("End of School");
         Schedule s = new Schedule(times, events);
@@ -96,7 +96,7 @@ public class StaticSchedules {
         times.add(1420);
         events.add("Passing Period");
         times.add(1425);
-        events.add("Period 8");
+        events.add("Period 7");
         times.add(1540);
         events.add("End of School");
         Schedule s = new Schedule(times, events);
