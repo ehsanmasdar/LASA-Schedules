@@ -1,4 +1,6 @@
-package com.asdar.lasaschedules;
+package com.asdar.lasaschedules.views;
+
+import com.asdar.lasaschedules.R;
 
 import android.app.Dialog;
 import android.content.Context;

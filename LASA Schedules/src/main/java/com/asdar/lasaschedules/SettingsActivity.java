@@ -4,6 +4,8 @@ package com.asdar.lasaschedules;
  * Created by Ehsan on 4/19/2014.
  */
 
+import com.asdar.lasaschedules.R;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;

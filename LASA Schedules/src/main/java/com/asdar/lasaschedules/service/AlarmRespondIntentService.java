@@ -1,4 +1,6 @@
-package com.asdar.lasaschedules;
+package com.asdar.lasaschedules.service;
+
+import com.asdar.lasaschedules.views.HomeFragment;
 
 import android.app.IntentService;
 import android.content.Intent;

@@ -1,4 +1,4 @@
-package com.asdar.lasaschedules;
+package com.asdar.lasaschedules.views;
 
 import android.content.Context;
 import android.graphics.Typeface;

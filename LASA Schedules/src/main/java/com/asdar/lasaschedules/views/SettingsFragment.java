@@ -1,11 +1,13 @@
-package com.asdar.lasaschedules;
+package com.asdar.lasaschedules.views;
+
+import com.asdar.lasaschedules.service.NotificationService;
+import com.asdar.lasaschedules.R;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.support.v4.preference.PreferenceFragment;
-import android.util.Log;
 
 /**
  * Created by Ehsan on 4/2/14.

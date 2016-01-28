@@ -1,4 +1,12 @@
-package com.asdar.lasaschedules;
+package com.asdar.lasaschedules.service;
+
+import com.asdar.lasaschedules.MainActivity;
+import com.asdar.lasaschedules.R;
+import com.asdar.lasaschedules.util.Event;
+import com.asdar.lasaschedules.util.Resources;
+import com.asdar.lasaschedules.util.Schedule;
+
+import org.joda.time.DateTime;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -46,26 +54,16 @@ public class NotificationService extends Service {
         t.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
-                    /* temp1.get(0) = Current Class name
-                       temp1.get(1) = Current Class start time
-                       temp2.get(0) = Time left in current class
-                       temp2.get(1) = End time of current class
-                       temp2.get(2) = Next Class start time
-                     */
                 s = Resources.getSchedule(getApplicationContext());
-                Calendar c = Calendar.getInstance();
-                ArrayList<String> temp1 = s.getCurrent();
-                ArrayList<String> temp2 = s.getTimeTillNext();
-                if (s == null) {
-                    mNotificationManager.cancel(id);
-                } else if ((c.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) || (c.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)) {
-                    mNotificationManager.cancel(id);
-                } else {
-                    if (temp1.size() == 0 || temp2.size() == 0) {
-                        mNotificationManager.cancel(id);
-                    } else {
-                        sendNotification(temp1.get(0), temp2.get(0));
+                DateTime now = new DateTime();
+
+                if (s != null && (now.dayOfWeek().get() < 5)) {
+                    Event e = s.getCurrent();
+                    if (e != null){
+                        sendNotification(e.name, s.getTimeTillNext() + " ");
                     }
+                } else{
+                    mNotificationManager.cancel(id);
                 }
             }
         }, 1, 1, TimeUnit.SECONDS);

@@ -1,4 +1,4 @@
-package com.asdar.lasaschedules;
+package com.asdar.lasaschedules.service;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.asdar.lasaschedules;
+package com.asdar.lasaschedules.views;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,7 +14,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-import com.espian.showcaseview.targets.ActionItemTarget;
+
+import com.asdar.lasaschedules.service.NotificationService;
+import com.asdar.lasaschedules.R;
+import com.asdar.lasaschedules.util.Event;
+import com.asdar.lasaschedules.util.Resources;
+import com.asdar.lasaschedules.util.StaticResources;
+import com.asdar.lasaschedules.TodayActivity;
+import com.asdar.lasaschedules.util.Schedule;
+
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.Executors;
@@ -52,7 +65,7 @@ public class HomeFragment extends Fragment {
 
     }
 
-    public void setTextViews(final ArrayList<String> temp1, final ArrayList<String> temp2) {
+    public void setTextViews(final Event e) {
         if (getActivity() != null) {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
@@ -64,49 +77,28 @@ public class HomeFragment extends Fragment {
                         final RobotoTextView endtime = (RobotoTextView) getView().findViewById(R.id.endtime);
                         final RobotoTextView next = (RobotoTextView) getView().findViewById(R.id.next);
                         final RobotoTextView minuteText = (RobotoTextView) getView().findViewById(R.id.minuteText);
-                        remain.setTypeface(null, StaticResources.ROBOTO_LIGHT);
+                        //remain.setTypeface(null, StaticResources.ROBOTO_LIGHT);
+                        DateTime now = new DateTime();
+                        DateTimeFormatter out = DateTimeFormat.forPattern("hh:mm a");
+
                         //Plurality
-                        if (temp2.get(0).equals("1")) {
+                        if (s.getTimeTillNext() > 1) {
                             minuteText.setText("minute remaining");
                         } else {
                             minuteText.setText("minutes remaining");
                         }
-                        current.setText(temp1.get(0));
-                        startime.setText(timeConvertion(temp1.get(1)));
-                        remain.setText(temp2.get(0));
-                        endtime.setText(timeConvertion(temp2.get(1)));
-                        next.setText(temp2.get(2));
+
+                        current.setText(e.name);
+                        startime.setText(out.print(e.starttime));
+                        remain.setText(s.getTimeTillNext() + "");
+                        endtime.setText(out.print(e.endtime));
+                        next.setText(s.getNext().name);
                     }
                 }
             });
         }
     }
 
-    private String timeConvertion(String s) {
-        String output;
-        int in = Integer.parseInt(s);
-        int hour = (in / 100) % 12;
-        if (hour == 0){
-            hour = 12;
-        }
-        int min = in % 100;
-        String minoutput;
-        if (min < 10) {
-            minoutput = "0" + min;
-        } else {
-            minoutput = "" + min;
-        }
-        boolean pm = false;
-        if (in / 100 > 11) {
-            pm = true;
-        }
-        if (pm) {
-            output = hour + ":" + minoutput + " " + "pm";
-        } else {
-            output = hour + ":" + minoutput + " " + "am";
-        }
-        return output;
-    }
     public void onResume() {
         super.onResume();
         if (getActivity() != null) {
@@ -123,28 +115,16 @@ public class HomeFragment extends Fragment {
         t.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
-                    /* temp1.get(0) = Current Class name
-                       temp1.get(1) = Current Class start time
-                       temp2.get(0) = Time left in current class
-                       temp2.get(1) = End time of current class
-                       temp2.get(2) = Next Class start time
-                     */
                 s = Resources.getSchedule(getActivity());
-                final Calendar c = Calendar.getInstance();
-                if (s == null){
-                    isClassOn(false);
-                }
-                else if ((c.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) || (c.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)) {
-                    isClassOn(false);
-                } else {
-                    ArrayList<String> temp1 = s.getCurrent();
-                    ArrayList<String> temp2 = s.getTimeTillNext();
-                    if (temp1.size() == 0 || temp2.size() == 0) {
-                        isClassOn(false);
-                    } else {
+                DateTime now = new DateTime();
+                if (s != null && (now.dayOfWeek().get() < 5)) {
+                    Event e = s.getCurrent();
+                    if (e != null){
                         isClassOn(true);
-                        setTextViews(temp1, temp2);
+                        setTextViews(e);
                     }
+                } else{
+                    isClassOn(false);
                 }
 
             }

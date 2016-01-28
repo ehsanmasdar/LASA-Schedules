@@ -1,5 +1,10 @@
 package com.asdar.lasaschedules;
 
+import com.asdar.lasaschedules.service.AlarmRespondIntentService;
+import com.asdar.lasaschedules.views.HomeFragment;
+import com.asdar.lasaschedules.views.SettingsFragment;
+import com.asdar.lasaschedules.views.StaticScheduleFragment;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;

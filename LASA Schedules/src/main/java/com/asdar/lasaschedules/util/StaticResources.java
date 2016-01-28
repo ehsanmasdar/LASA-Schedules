@@ -1,4 +1,4 @@
-package com.asdar.lasaschedules;
+package com.asdar.lasaschedules.util;
 
 /**
  * Created by Ehsan on 6/28/2014.
