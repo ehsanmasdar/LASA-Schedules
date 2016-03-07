@@ -18,8 +18,9 @@ import java.util.regex.Pattern;
 /**
  * Created by Ehsan on 4/18/2014.
  */
-public class AboutDialog extends Dialog{
+public class AboutDialog extends Dialog {
     private Context context;
+
     public AboutDialog(Context context) {
         super(context);
         this.context = context;
@@ -28,7 +29,7 @@ public class AboutDialog extends Dialog{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.about);
-        TextView about = (TextView)findViewById(R.id.about);
+        TextView about = (TextView) findViewById(R.id.about);
         about.setText(Html.fromHtml(readRawTextFile(R.raw.about)));
         Linkify.addLinks(about, Linkify.ALL);
         Pattern icons8matcher = Pattern.compile("icons8");

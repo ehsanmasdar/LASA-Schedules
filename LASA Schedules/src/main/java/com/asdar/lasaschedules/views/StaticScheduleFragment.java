@@ -1,5 +1,8 @@
 package com.asdar.lasaschedules.views;
 
+import com.asdar.lasaschedules.R;
+import com.astuetz.PagerSlidingTabStrip;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,9 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.asdar.lasaschedules.R;
-import com.astuetz.PagerSlidingTabStrip;
-
 
 /**
  * Created by Ehsan on 4/21/2014.
@@ -20,6 +20,7 @@ import com.astuetz.PagerSlidingTabStrip;
 public class StaticScheduleFragment extends Fragment {
     ViewPager pager;
     ActionBar actionBar;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_scheduleframe, container, false);
@@ -31,14 +32,21 @@ public class StaticScheduleFragment extends Fragment {
 
 
     }
+
     public void onResume() {
         super.onResume();
-        pager = (ViewPager)getActivity().findViewById(R.id.pager);
-        pager.setAdapter(new Adapter (getChildFragmentManager()));
+        pager = (ViewPager) getActivity().findViewById(R.id.pager);
+        pager.setAdapter(new Adapter(getChildFragmentManager()));
         // Bind the tabs to the ViewPager
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) getActivity().findViewById(R.id.tabs);
         tabs.setViewPager(pager);
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
     public class Adapter extends FragmentPagerAdapter {
         public Adapter(FragmentManager fm) {
             super(fm);
@@ -53,9 +61,10 @@ public class StaticScheduleFragment extends Fragment {
             fragment.setArguments(args);
             return fragment;
         }
+
         @Override
         public CharSequence getPageTitle(int position) {
-            switch(position){
+            switch (position) {
                 case 0:
                     return "Normal";
                 case 1:
@@ -68,14 +77,10 @@ public class StaticScheduleFragment extends Fragment {
                     return "Normal";
             }
         }
+
         @Override
         public int getCount() {
             return 4;
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
     }
 }

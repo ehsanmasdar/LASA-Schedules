@@ -19,8 +19,6 @@ import android.os.Build;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -32,20 +30,20 @@ import java.util.concurrent.TimeUnit;
 
 public class NotificationService extends Service {
     private final IBinder binder = new NotificationBinder();
+    NotificationCompat.Builder builder;
+    Notification.Builder noncompat;
     private Schedule s;
     private int id = 111111;
     private ScheduledExecutorService t;
-    NotificationCompat.Builder builder;
-    Notification.Builder noncompat;
+
     public int onStartCommand(Intent intent, int flags, int startID) {
-       serviceRunner();
-       if (Build.VERSION.SDK_INT >= 20){
-           noncompat = new Notification.Builder(this);
-       }
-       else{
-           builder = new NotificationCompat.Builder(this);
-       }
-       return 1;
+        serviceRunner();
+        if (Build.VERSION.SDK_INT >= 20) {
+            noncompat = new Notification.Builder(this);
+        } else {
+            builder = new NotificationCompat.Builder(this);
+        }
+        return 1;
     }
 
     public void serviceRunner() {
@@ -59,10 +57,10 @@ public class NotificationService extends Service {
 
                 if (s != null && (now.dayOfWeek().get() < 5)) {
                     Event e = s.getCurrent();
-                    if (e != null){
+                    if (e != null) {
                         sendNotification(e.name, s.getTimeTillNext() + " ");
                     }
-                } else{
+                } else {
                     mNotificationManager.cancel(id);
                 }
             }
@@ -74,26 +72,16 @@ public class NotificationService extends Service {
         return this.binder;
     }
 
-    public class NotificationBinder extends Binder {
-        public NotificationBinder() {
-        }
-
-        NotificationService getService() {
-            return NotificationService.this;
-        }
-    }
-
     public void sendNotification(String place, String min) {
         Intent intent = new Intent(this, MainActivity.class);
         PendingIntent localPendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        if(Build.VERSION.SDK_INT >= 20){
+        if (Build.VERSION.SDK_INT >= 20) {
             noncompat.setContentTitle("In " + place);
             noncompat.setSmallIcon(R.drawable.ic_stat_notification);
             //Plural/singular
-            if (min.equals("1")){
+            if (min.equals("1")) {
                 noncompat.setContentText(min + " minute remains");
-            }
-            else{
+            } else {
                 noncompat.setContentText(min + " minutes remain");
             }
             noncompat.setPriority(Notification.PRIORITY_HIGH);
@@ -105,15 +93,13 @@ public class NotificationService extends Service {
             noncompat.setCategory(Notification.CATEGORY_ALARM);
             NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             mNotificationManager.notify(id, noncompat.build());
-        }
-        else {
+        } else {
             builder.setContentTitle("In " + place);
             builder.setSmallIcon(R.drawable.ic_stat_notification);
             //Plural/singular
-            if (min.equals("1")){
+            if (min.equals("1")) {
                 builder.setContentText(min + " minute remains");
-            }
-            else{
+            } else {
                 builder.setContentText(min + " minutes remain");
             }
             builder.setPriority(-2);
@@ -132,5 +118,14 @@ public class NotificationService extends Service {
         t.shutdown();
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.cancel(id);
+    }
+
+    public class NotificationBinder extends Binder {
+        public NotificationBinder() {
+        }
+
+        NotificationService getService() {
+            return NotificationService.this;
+        }
     }
 }

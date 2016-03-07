@@ -2,7 +2,6 @@ package com.asdar.lasaschedules.util;
 
 import org.joda.time.LocalTime;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -13,11 +12,11 @@ public class StaticSchedules {
     public static Schedule normal() {
         ArrayList<Event> events = new ArrayList<>();
 
-        events.add(new Event(new LocalTime(8,15),new LocalTime(9,50),"Period 0A/0B"));
-        events.add(new Event(new LocalTime(9,55), new LocalTime(11,25),"Period 1/5" ));
-        events.add(new Event(new LocalTime(11,35), new LocalTime(13,05),"Period 2/6" ));
-        events.add(new Event(new LocalTime(13,05), new LocalTime(14,05),"Lunch" ));
-        events.add(new Event(new LocalTime(14,10), new LocalTime(15,40),"Period 3/7" ));
+        events.add(new Event(new LocalTime(8, 15), new LocalTime(9, 50), "Period 0A/0B"));
+        events.add(new Event(new LocalTime(9, 55), new LocalTime(11, 25), "Period 1/5"));
+        events.add(new Event(new LocalTime(11, 35), new LocalTime(13, 05), "Period 2/6"));
+        events.add(new Event(new LocalTime(13, 05), new LocalTime(14, 05), "Lunch"));
+        events.add(new Event(new LocalTime(14, 10), new LocalTime(15, 40), "Period 3/7"));
 
         return new Schedule(events);
     }

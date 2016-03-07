@@ -19,7 +19,7 @@ import java.net.URLConnection;
 /**
  * Created by Ehsan on 4/20/2014.
  */
-public class AlarmRespondIntentService extends IntentService{
+public class AlarmRespondIntentService extends IntentService {
 
     public AlarmRespondIntentService() {
         super("AlarmRespondIntentService");
@@ -45,6 +45,7 @@ public class AlarmRespondIntentService extends IntentService{
             return "";
         }
     }
+
     protected void onHandleIntent(Intent intent) {
         Log.d("com.asdar.lasaschedules", "Alarm reciever called, pulling new schedule");
         String parsedString = null;
@@ -65,9 +66,9 @@ public class AlarmRespondIntentService extends IntentService{
             e.printStackTrace();
         }
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        if (parsedString != null){
+        if (parsedString != null) {
             SharedPreferences.Editor e = sp.edit();
-            e.putString("jsonschedule",parsedString);
+            e.putString("jsonschedule", parsedString);
             e.commit();
             Log.d("com.asdar.lasaschedules", "Got Schedule: " + parsedString);
         }
@@ -80,8 +81,7 @@ public class AlarmRespondIntentService extends IntentService{
         }
         try {
             HomeFragment.refresh(getApplicationContext());
-        }
-        catch (Exception e){
+        } catch (Exception e) {
 
         }
     }

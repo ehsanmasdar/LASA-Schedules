@@ -1,16 +1,8 @@
 package com.asdar.lasaschedules.views;
 
-import com.asdar.lasaschedules.R;
-import com.asdar.lasaschedules.util.StaticSchedules;
-
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 
-import java.util.ArrayList;
-
-/**
- * Created by Ehsan on 4/21/2014.
- */
 public class ScheduleFragment extends ListFragment {
 
 
@@ -18,6 +10,7 @@ public class ScheduleFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
     }
+
     public void onResume() {
         super.onResume();
         int schedule = getArguments().getInt("request");

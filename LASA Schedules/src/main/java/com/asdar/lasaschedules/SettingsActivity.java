@@ -4,12 +4,9 @@ package com.asdar.lasaschedules;
  * Created by Ehsan on 4/19/2014.
  */
 
-import com.asdar.lasaschedules.R;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 
@@ -17,7 +14,7 @@ import android.view.MenuItem;
 /**
  * Created by Ehsan on 8/17/13.
  */
-public class SettingsActivity extends PreferenceActivity{
+public class SettingsActivity extends PreferenceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +24,7 @@ public class SettingsActivity extends PreferenceActivity{
         }
 
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

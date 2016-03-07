@@ -3,8 +3,8 @@ package com.asdar.lasaschedules;
 import com.asdar.lasaschedules.util.Resources;
 import com.asdar.lasaschedules.util.Schedule;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.ListView;
 

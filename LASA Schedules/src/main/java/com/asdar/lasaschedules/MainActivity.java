@@ -25,7 +25,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class MainActivity extends ActionBarActivity  {
+public class MainActivity extends ActionBarActivity {
     String[] mDrawerArray;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -33,6 +33,7 @@ public class MainActivity extends ActionBarActivity  {
     private CharSequence mTitle;
     private AlarmManager alarmMgr;
     private PendingIntent alarmIntent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,21 +72,22 @@ public class MainActivity extends ActionBarActivity  {
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-        if (savedInstanceState == null){
+        if (savedInstanceState == null) {
             selectItem(0);
         }
         SharedPreferences s = PreferenceManager.getDefaultSharedPreferences(this);
 
-        alarmMgr = (AlarmManager)getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+        alarmMgr = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(getApplicationContext(), AlarmRespondIntentService.class);
         alarmIntent = PendingIntent.getService(getApplicationContext(), 0, intent, 0);
         alarmMgr.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 1,
                 AlarmManager.INTERVAL_FIFTEEN_MINUTES, alarmIntent);
     }
+
     private void selectItem(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
-        if (position == 0){
+        if (position == 0) {
             Fragment fragment = new HomeFragment();
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
         }
@@ -93,28 +95,30 @@ public class MainActivity extends ActionBarActivity  {
             StaticScheduleFragment fragment = new StaticScheduleFragment();
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
         }
-        if (position == 2){
+        if (position == 2) {
             SettingsFragment fragment = new SettingsFragment();
-            fragmentManager.beginTransaction().replace(R.id.content_frame,fragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 
         }
-        if (position == 3){
+        if (position == 3) {
             String url = "http://lasa2017.com/schedules/";
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setData(Uri.parse(url));
             startActivity(i);
         }
         // update selected item and title, then close the drawer
-        if (position != 3){
+        if (position != 3) {
             mDrawerList.setItemChecked(position, true);
             setTitle(getResources().getStringArray(R.array.drawer_array)[position]);
         }
         mDrawerLayout.closeDrawer(mDrawerList);
     }
+
     public void setTitle(CharSequence title) {
         mTitle = title;
         getSupportActionBar().setTitle(mTitle);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -126,18 +130,20 @@ public class MainActivity extends ActionBarActivity  {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
     /* The click listner for ListView in the navigation drawer */
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             selectItem(position);
         }
-    }
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-        mDrawerToggle.syncState();
     }
 
 }

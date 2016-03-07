@@ -1,7 +1,7 @@
 package com.asdar.lasaschedules.views;
 
-import com.asdar.lasaschedules.service.NotificationService;
 import com.asdar.lasaschedules.R;
+import com.asdar.lasaschedules.service.NotificationService;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,26 +19,28 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.fragment_settings);
-        Preference about= findPreference("about");
+        Preference about = findPreference("about");
         about.setOnPreferenceClickListener(this);
     }
+
     @Override
     public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-        if (key.equals("notification")&& !prefs.getBoolean("notification",true)  ){
+        if (key.equals("notification") && !prefs.getBoolean("notification", true)) {
             Intent service = new Intent(getActivity(), NotificationService.class);
             getActivity().stopService(service);
         }
-        if (key.equals("notification")&& prefs.getBoolean("notification",true) ){
+        if (key.equals("notification") && prefs.getBoolean("notification", true)) {
             Intent service = new Intent(getActivity(), NotificationService.class);
             getActivity().stopService(service);
             getActivity().startService(service);
         }
-        if (key.equals("updates")&& !prefs.getBoolean("updates",true) ){
+        if (key.equals("updates") && !prefs.getBoolean("updates", true)) {
         }
-        if (key.equals("updates")&& prefs.getBoolean("notification",true) ){
+        if (key.equals("updates") && prefs.getBoolean("notification", true)) {
 
         }
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -54,7 +56,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
     @Override
     public boolean onPreferenceClick(Preference preference) {
-        if (preference.getKey().equals("about")){
+        if (preference.getKey().equals("about")) {
             AboutDialog about = new AboutDialog(getActivity());
             about.setTitle("LASA Schdules");
             about.show();

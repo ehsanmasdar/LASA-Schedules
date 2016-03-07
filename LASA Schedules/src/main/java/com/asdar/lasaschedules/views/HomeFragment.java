@@ -1,12 +1,22 @@
 package com.asdar.lasaschedules.views;
 
+import com.asdar.lasaschedules.R;
+import com.asdar.lasaschedules.TodayActivity;
+import com.asdar.lasaschedules.service.NotificationService;
+import com.asdar.lasaschedules.util.Event;
+import com.asdar.lasaschedules.util.Resources;
+import com.asdar.lasaschedules.util.Schedule;
+
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,20 +25,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.asdar.lasaschedules.service.NotificationService;
-import com.asdar.lasaschedules.R;
-import com.asdar.lasaschedules.util.Event;
-import com.asdar.lasaschedules.util.Resources;
-import com.asdar.lasaschedules.util.StaticResources;
-import com.asdar.lasaschedules.TodayActivity;
-import com.asdar.lasaschedules.util.Schedule;
-
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -37,7 +33,11 @@ import java.util.concurrent.TimeUnit;
  * Created by Ehsan on 4/2/14.
  */
 public class HomeFragment extends Fragment {
-   public static Schedule s;
+    public static Schedule s;
+
+    public static void refresh(Context c) {
+        s = Resources.getSchedule(c);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,7 +55,7 @@ public class HomeFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        if (sp.getBoolean("firstlaunch", true)){
+        if (sp.getBoolean("firstlaunch", true)) {
             //ActionItemTarget target = new ActionItemTarget(getActivity(),R.id.action_fullcal);
             //ShowcaseView.insertShowcaseView(target, getActivity(), R.string.showcase_title, R.string.showcase_details);
             SharedPreferences.Editor e = sp.edit();
@@ -119,19 +119,17 @@ public class HomeFragment extends Fragment {
                 DateTime now = new DateTime();
                 if (s != null && (now.dayOfWeek().get() < 5)) {
                     Event e = s.getCurrent();
-                    if (e != null){
+                    if (e != null) {
                         isClassOn(true);
                         setTextViews(e);
                     }
-                } else{
+                } else {
                     isClassOn(false);
                 }
 
             }
-        }, 0,1, TimeUnit.SECONDS);
+        }, 0, 1, TimeUnit.SECONDS);
     }
-
-
 
     public void isClassOn(final boolean b) {
         if (getView() != null) {
@@ -173,29 +171,28 @@ public class HomeFragment extends Fragment {
             }
         }
     }
-    public static void refresh(Context c){
-        s = Resources.getSchedule(c);
-    }
+
     private String getOutOfSchoolText() {
-            return "No School";
+        return "No School";
     }
+
     @Override
     public void onCreateOptionsMenu(
             Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.today, menu);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // handle item selection
         switch (item.getItemId()) {
             case R.id.action_fullcal:
                 Schedule s = Resources.getSchedule(getActivity());
-                if (s != null){
+                if (s != null) {
                     Intent intent = new Intent(getActivity(), TodayActivity.class);
                     startActivity(intent);
-                }
-                else {
-                     Toast.makeText(getActivity(), "No Active Schedule", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getActivity(), "No Active Schedule", Toast.LENGTH_LONG).show();
                 }
                 return true;
             default:

@@ -1,21 +1,12 @@
 package com.asdar.lasaschedules.util;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-
-import com.google.gson.Gson;
-
-import com.asdar.lasaschedules.util.Schedule;
-import com.asdar.lasaschedules.util.StaticSchedules;
-
-import java.util.Calendar;
 
 /**
  * Created by Ehsan on 8/23/2014.
  */
 public class Resources {
-//    public static Schedule getSchedule(Context context){
+    //    public static Schedule getSchedule(Context context){
 //        Schedule out;
 //        final Calendar c = Calendar.getInstance();
 //        String parsedString = "";
@@ -68,7 +59,7 @@ public class Resources {
 //        }
 //        return out;
 //    }
-    public static Schedule getSchedule(Context context){
+    public static Schedule getSchedule(Context context) {
         return StaticSchedules.normal();
     }
 }
