@@ -1,19 +1,11 @@
 package com.asdar.lasaschedules;
 
-/**
- * Created by Ehsan on 4/19/2014.
- */
-
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 
-
-/**
- * Created by Ehsan on 8/17/13.
- */
 public class SettingsActivity extends PreferenceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

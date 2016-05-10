@@ -9,6 +9,7 @@
     <string name="action_about">About</string>
     <string name="nextText">up next</string>
     <string name="endtimeText">ends at</string>
+    <string name="endOfSchool">End of School</string>
     <string name="minuteText">minutes remaining</string>
     <string name="starttimeText">started at</string>
     <string name="inText">currently in</string>
@@ -17,6 +18,8 @@
     <string name="title_activity_today">Full Schedule</string>
     <string name="showcase_title">Today\'s Schedule</string>
     <string name="showcase_details">View the full schedule for the current day.</string>
+    <string name="minute_singular">minute remaining</string>
+    <string name="minute_plural">minutes remaining</string>
     <string-array name="drawer_array">
         <item>Today</item>
         <item>All Schedules</item>

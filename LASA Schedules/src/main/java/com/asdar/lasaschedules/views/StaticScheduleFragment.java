@@ -14,12 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-/**
- * Created by Ehsan on 4/21/2014.
- */
 public class StaticScheduleFragment extends Fragment {
     ViewPager pager;
-    ActionBar actionBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

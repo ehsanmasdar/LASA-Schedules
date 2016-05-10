@@ -29,11 +29,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by Ehsan on 4/2/14.
- */
 public class HomeFragment extends Fragment {
-    public static Schedule s;
+    private static Schedule s;
 
     public static void refresh(Context c) {
         s = Resources.getSchedule(c);
@@ -65,12 +62,13 @@ public class HomeFragment extends Fragment {
 
     }
 
-    public void setTextViews(final Event e) {
+    public void setTextViews() {
         if (getActivity() != null) {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     if (getView() != null) {
+                        Event e = s.getCurrent();
                         final RobotoTextView current = (RobotoTextView) getView().findViewById(R.id.current);
                         final RobotoTextView startime = (RobotoTextView) getView().findViewById(R.id.startime);
                         final RobotoTextView remain = (RobotoTextView) getView().findViewById(R.id.remain);
@@ -78,21 +76,25 @@ public class HomeFragment extends Fragment {
                         final RobotoTextView next = (RobotoTextView) getView().findViewById(R.id.next);
                         final RobotoTextView minuteText = (RobotoTextView) getView().findViewById(R.id.minuteText);
                         //remain.setTypeface(null, StaticResources.ROBOTO_LIGHT);
-                        DateTime now = new DateTime();
                         DateTimeFormatter out = DateTimeFormat.forPattern("hh:mm a");
 
                         //Plurality
                         if (s.getTimeTillNext() > 1) {
-                            minuteText.setText("minute remaining");
+                            minuteText.setText(R.string.minute_plural);
                         } else {
-                            minuteText.setText("minutes remaining");
+                            minuteText.setText(R.string.minute_singular);
                         }
 
                         current.setText(e.name);
                         startime.setText(out.print(e.starttime));
-                        remain.setText(s.getTimeTillNext() + "");
+                        remain.setText(s.getTimeTillNext().toString());
                         endtime.setText(out.print(e.endtime));
-                        next.setText(s.getNext().name);
+                        if (s.getNext() == null){
+                            next.setText(R.string.endOfSchool);
+                        }
+                        else {
+                            next.setText(s.getNext().name);
+                        }
                     }
                 }
             });
@@ -118,10 +120,12 @@ public class HomeFragment extends Fragment {
                 s = Resources.getSchedule(getActivity());
                 DateTime now = new DateTime();
                 if (s != null && (now.dayOfWeek().get() < 5)) {
-                    Event e = s.getCurrent();
-                    if (e != null) {
+                    if (s.getCurrent() != null) {
                         isClassOn(true);
-                        setTextViews(e);
+                        setTextViews();
+                    }
+                    else{
+                        isClassOn(false);
                     }
                 } else {
                     isClassOn(false);

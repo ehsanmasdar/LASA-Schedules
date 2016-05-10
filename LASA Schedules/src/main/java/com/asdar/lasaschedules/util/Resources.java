@@ -2,9 +2,6 @@ package com.asdar.lasaschedules.util;
 
 import android.content.Context;
 
-/**
- * Created by Ehsan on 8/23/2014.
- */
 public class Resources {
     //    public static Schedule getSchedule(Context context){
 //        Schedule out;

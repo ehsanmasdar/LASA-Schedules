@@ -23,17 +23,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by Ehsan on 4/17/2014.
- */
-
-
 public class NotificationService extends Service {
     private final IBinder binder = new NotificationBinder();
     NotificationCompat.Builder builder;
     Notification.Builder noncompat;
     private Schedule s;
-    private int id = 111111;
+    private int id = 1231231;
     private ScheduledExecutorService t;
 
     public int onStartCommand(Intent intent, int flags, int startID) {
@@ -58,7 +53,10 @@ public class NotificationService extends Service {
                 if (s != null && (now.dayOfWeek().get() < 5)) {
                     Event e = s.getCurrent();
                     if (e != null) {
-                        sendNotification(e.name, s.getTimeTillNext() + " ");
+                        sendNotification(e.name, s.getTimeTillNext().toString());
+                    }
+                    else{
+                        mNotificationManager.cancel(id);
                     }
                 } else {
                     mNotificationManager.cancel(id);
@@ -75,7 +73,7 @@ public class NotificationService extends Service {
     public void sendNotification(String place, String min) {
         Intent intent = new Intent(this, MainActivity.class);
         PendingIntent localPendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        if (Build.VERSION.SDK_INT >= 20) {
+        if (Build.VERSION.SDK_INT > 20) {
             noncompat.setContentTitle("In " + place);
             noncompat.setSmallIcon(R.drawable.ic_stat_notification);
             //Plural/singular

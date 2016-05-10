@@ -16,9 +16,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
-/**
- * Created by Ehsan on 4/20/2014.
- */
+
 public class AlarmRespondIntentService extends IntentService {
 
     public AlarmRespondIntentService() {
@@ -50,7 +48,7 @@ public class AlarmRespondIntentService extends IntentService {
         Log.d("com.asdar.lasaschedules", "Alarm reciever called, pulling new schedule");
         String parsedString = null;
         try {
-            URL url = new URL("http://ehsandev.com/school.json");
+            URL url = new URL("https://ehsandev.com/school.json");
             URLConnection conn = url.openConnection();
 
             HttpURLConnection httpConn = (HttpURLConnection) conn;
@@ -81,7 +79,7 @@ public class AlarmRespondIntentService extends IntentService {
         }
         try {
             HomeFragment.refresh(getApplicationContext());
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
     }

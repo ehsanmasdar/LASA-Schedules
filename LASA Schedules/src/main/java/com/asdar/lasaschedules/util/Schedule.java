@@ -8,6 +8,10 @@ import java.util.ArrayList;
  * Holds a day's schdule represented by events
  */
 public class Schedule {
+    public ArrayList<Event> getEvents() {
+        return events;
+    }
+
     private ArrayList<Event> events;
 
     public Schedule(ArrayList<Event> events) {
@@ -28,7 +32,7 @@ public class Schedule {
         DateTime now = new DateTime();
         Event current = getCurrent();
         if (current != null)
-            return (getCurrent().endtime.getMillisOfDay() - now.getMillisOfDay()) / 60000;
+            return (getCurrent().endtime.getMillisOfDay() - now.getMillisOfDay()) / 60000 + 1;
         return null;
     }
 
