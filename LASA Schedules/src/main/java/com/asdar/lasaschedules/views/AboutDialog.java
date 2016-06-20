@@ -1,7 +1,5 @@
 package com.asdar.lasaschedules.views;
 
-import com.asdar.lasaschedules.R;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -9,15 +7,14 @@ import android.text.Html;
 import android.text.util.Linkify;
 import android.widget.TextView;
 
+import com.asdar.lasaschedules.R;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.regex.Pattern;
 
-/**
- * Created by Ehsan on 4/18/2014.
- */
 public class AboutDialog extends Dialog {
     private Context context;
 

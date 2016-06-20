@@ -5,17 +5,19 @@ import org.joda.time.DateTime;
 import java.util.ArrayList;
 
 /**
- * Holds a day's schdule represented by events
+ * Holds a day's schedule represented by events
  */
 public class Schedule {
-    public ArrayList<Event> getEvents() {
-        return events;
-    }
-
+    private String name;
     private ArrayList<Event> events;
 
-    public Schedule(ArrayList<Event> events) {
+    public Schedule(ArrayList<Event> events, String name) {
         this.events = events;
+        this.name = name;
+    }
+
+    public ArrayList<Event> getEvents() {
+        return events;
     }
 
     public Event getCurrent() {
@@ -45,5 +47,13 @@ public class Schedule {
             }
         }
         return null;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

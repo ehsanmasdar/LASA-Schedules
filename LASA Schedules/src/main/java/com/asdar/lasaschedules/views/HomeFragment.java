@@ -1,5 +1,21 @@
 package com.asdar.lasaschedules.views;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.asdar.lasaschedules.R;
 import com.asdar.lasaschedules.TodayActivity;
 import com.asdar.lasaschedules.service.NotificationService;
@@ -11,30 +27,12 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class HomeFragment extends Fragment {
     private static Schedule s;
-
-    public static void refresh(Context c) {
-        s = Resources.getSchedule(c);
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,15 +49,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        if (sp.getBoolean("firstlaunch", true)) {
-            //ActionItemTarget target = new ActionItemTarget(getActivity(),R.id.action_fullcal);
-            //ShowcaseView.insertShowcaseView(target, getActivity(), R.string.showcase_title, R.string.showcase_details);
-            SharedPreferences.Editor e = sp.edit();
-            e.putBoolean("firstlaunch", false);
-            e.commit();
-        }
-
     }
 
     public void setTextViews() {
@@ -69,13 +58,13 @@ public class HomeFragment extends Fragment {
                 public void run() {
                     if (getView() != null) {
                         Event e = s.getCurrent();
-                        final RobotoTextView current = (RobotoTextView) getView().findViewById(R.id.current);
-                        final RobotoTextView startime = (RobotoTextView) getView().findViewById(R.id.startime);
-                        final RobotoTextView remain = (RobotoTextView) getView().findViewById(R.id.remain);
-                        final RobotoTextView endtime = (RobotoTextView) getView().findViewById(R.id.endtime);
-                        final RobotoTextView next = (RobotoTextView) getView().findViewById(R.id.next);
-                        final RobotoTextView minuteText = (RobotoTextView) getView().findViewById(R.id.minuteText);
-                        //remain.setTypeface(null, StaticResources.ROBOTO_LIGHT);
+                        final TextView current = (TextView) getView().findViewById(R.id.current);
+                        final TextView startime = (TextView) getView().findViewById(R.id.startime);
+                        final TextView remain = (TextView) getView().findViewById(R.id.remain);
+                        final TextView endtime = (TextView) getView().findViewById(R.id.endtime);
+                        final TextView next = (TextView) getView().findViewById(R.id.next);
+                        final TextView minuteText = (TextView) getView().findViewById(R.id.minuteText);
+
                         DateTimeFormatter out = DateTimeFormat.forPattern("hh:mm a");
 
                         //Plurality
@@ -89,10 +78,9 @@ public class HomeFragment extends Fragment {
                         startime.setText(out.print(e.starttime));
                         remain.setText(s.getTimeTillNext().toString());
                         endtime.setText(out.print(e.endtime));
-                        if (s.getNext() == null){
+                        if (s.getNext() == null) {
                             next.setText(R.string.endOfSchool);
-                        }
-                        else {
+                        } else {
                             next.setText(s.getNext().name);
                         }
                     }
@@ -123,8 +111,7 @@ public class HomeFragment extends Fragment {
                     if (s.getCurrent() != null) {
                         isClassOn(true);
                         setTextViews();
-                    }
-                    else{
+                    } else {
                         isClassOn(false);
                     }
                 } else {
@@ -137,16 +124,16 @@ public class HomeFragment extends Fragment {
 
     public void isClassOn(final boolean b) {
         if (getView() != null) {
-            final RobotoTextView starttimeText = (RobotoTextView) getView().findViewById(R.id.starttimeText);
-            final RobotoTextView inText = (RobotoTextView) getView().findViewById(R.id.inText);
-            final RobotoTextView endtimeText = (RobotoTextView) getView().findViewById(R.id.endtimeText);
-            final RobotoTextView nextText = (RobotoTextView) getView().findViewById(R.id.nextText);
-            final RobotoTextView minuteText = (RobotoTextView) getView().findViewById(R.id.minuteText);
-            final RobotoTextView current = (RobotoTextView) getView().findViewById(R.id.current);
-            final RobotoTextView startime = (RobotoTextView) getView().findViewById(R.id.startime);
-            final RobotoTextView remain = (RobotoTextView) getView().findViewById(R.id.remain);
-            final RobotoTextView endtime = (RobotoTextView) getView().findViewById(R.id.endtime);
-            final RobotoTextView next = (RobotoTextView) getView().findViewById(R.id.next);
+            final TextView starttimeText = (TextView) getView().findViewById(R.id.starttimeText);
+            final TextView inText = (TextView) getView().findViewById(R.id.inText);
+            final TextView endtimeText = (TextView) getView().findViewById(R.id.endtimeText);
+            final TextView nextText = (TextView) getView().findViewById(R.id.nextText);
+            final TextView minuteText = (TextView) getView().findViewById(R.id.minuteText);
+            final TextView current = (TextView) getView().findViewById(R.id.current);
+            final TextView startime = (TextView) getView().findViewById(R.id.startime);
+            final TextView remain = (TextView) getView().findViewById(R.id.remain);
+            final TextView endtime = (TextView) getView().findViewById(R.id.endtime);
+            final TextView next = (TextView) getView().findViewById(R.id.next);
             if (getActivity() != null) {
 
                 getActivity().runOnUiThread(new Runnable() {

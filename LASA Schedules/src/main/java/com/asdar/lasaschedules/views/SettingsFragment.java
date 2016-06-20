@@ -1,27 +1,28 @@
 package com.asdar.lasaschedules.views;
 
-import com.asdar.lasaschedules.R;
-import com.asdar.lasaschedules.service.NotificationService;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.support.v4.preference.PreferenceFragment;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceFragmentCompat;
 
-/**
- * Created by Ehsan on 4/2/14.
- */
-public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener, Preference.OnPreferenceClickListener {
+import com.asdar.lasaschedules.R;
+import com.asdar.lasaschedules.service.NotificationService;
+
+public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener, Preference.OnPreferenceClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
 
+    @Override
+    public void onCreatePreferences(Bundle bundle, String s) {
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.fragment_settings);
         Preference about = findPreference("about");
         about.setOnPreferenceClickListener(this);
     }
+
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
@@ -33,11 +34,6 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             Intent service = new Intent(getActivity(), NotificationService.class);
             getActivity().stopService(service);
             getActivity().startService(service);
-        }
-        if (key.equals("updates") && !prefs.getBoolean("updates", true)) {
-        }
-        if (key.equals("updates") && prefs.getBoolean("notification", true)) {
-
         }
     }
 

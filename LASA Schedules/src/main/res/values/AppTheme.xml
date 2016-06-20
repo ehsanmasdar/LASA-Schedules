@@ -15,6 +15,6 @@
     </style>
     <!-- inherit from the material theme -->
     <style name="Theme.AppTheme.Base" parent="Theme.AppTheme">
-
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
     </style>
 </resources>

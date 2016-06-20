@@ -1,13 +1,5 @@
 package com.asdar.lasaschedules.service;
 
-import com.asdar.lasaschedules.MainActivity;
-import com.asdar.lasaschedules.R;
-import com.asdar.lasaschedules.util.Event;
-import com.asdar.lasaschedules.util.Resources;
-import com.asdar.lasaschedules.util.Schedule;
-
-import org.joda.time.DateTime;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -18,6 +10,14 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
+
+import com.asdar.lasaschedules.MainActivity;
+import com.asdar.lasaschedules.R;
+import com.asdar.lasaschedules.util.Event;
+import com.asdar.lasaschedules.util.Resources;
+import com.asdar.lasaschedules.util.Schedule;
+
+import org.joda.time.DateTime;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -54,8 +54,7 @@ public class NotificationService extends Service {
                     Event e = s.getCurrent();
                     if (e != null) {
                         sendNotification(e.name, s.getTimeTillNext().toString());
-                    }
-                    else{
+                    } else {
                         mNotificationManager.cancel(id);
                     }
                 } else {

@@ -1,17 +1,17 @@
 package com.asdar.lasaschedules.views;
 
-import com.asdar.lasaschedules.R;
-import com.astuetz.PagerSlidingTabStrip;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.asdar.lasaschedules.R;
+import com.asdar.lasaschedules.util.Resources;
+import com.astuetz.PagerSlidingTabStrip;
 
 
 public class StaticScheduleFragment extends Fragment {
@@ -60,23 +60,13 @@ public class StaticScheduleFragment extends Fragment {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "Normal";
-                case 1:
-                    return "Advisory";
-                case 2:
-                    return "Late Start";
-                case 3:
-                    return "Pep Rally";
-                default:
-                    return "Normal";
-            }
+
+            return Resources.getAllSchedules(getContext()).get(0).getName();
         }
 
         @Override
         public int getCount() {
-            return 4;
+            return Resources.getAllSchedules(getContext()).size();
         }
     }
 }

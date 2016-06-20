@@ -1,12 +1,5 @@
 package com.asdar.lasaschedules.views;
 
-import com.asdar.lasaschedules.R;
-import com.asdar.lasaschedules.util.Event;
-
-import org.joda.time.Minutes;
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.DateTimeFormatterBuilder;
-
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -15,6 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.asdar.lasaschedules.R;
+import com.asdar.lasaschedules.util.Event;
+
+import org.joda.time.Minutes;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.DateTimeFormatterBuilder;
+
 import java.util.ArrayList;
 
 public class ScheduleAdapter extends ArrayAdapter<Event> {
@@ -22,6 +22,7 @@ public class ScheduleAdapter extends ArrayAdapter<Event> {
     private LayoutInflater vi;
     private int viewResourceID;
     private ArrayList<Event> items;
+
     public ScheduleAdapter(Context context, int textViewResourceId, ArrayList<Event> items) {
         super(context, textViewResourceId, items);
         vi = LayoutInflater.from(context);
@@ -33,9 +34,9 @@ public class ScheduleAdapter extends ArrayAdapter<Event> {
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = convertView;
         Event g = items.get(position);
-        if (v == null){
+        if (v == null) {
 
-            LayoutInflater inflater = ((Activity)getContext()).getLayoutInflater();
+            LayoutInflater inflater = ((Activity) getContext()).getLayoutInflater();
             v = inflater.inflate(viewResourceID, parent, false);
             TextView title = (TextView) v.findViewById(R.id.title);
             TextView range = (TextView) v.findViewById(R.id.range);
@@ -48,7 +49,7 @@ public class ScheduleAdapter extends ArrayAdapter<Event> {
     }
 
     private String generateDuration(Event e) {
-        return Minutes.minutesBetween(e.starttime,e.endtime).getMinutes() + " minutes";
+        return Minutes.minutesBetween(e.starttime, e.endtime).getMinutes() + " minutes";
     }
 
     private String generateRange(Event e) {
