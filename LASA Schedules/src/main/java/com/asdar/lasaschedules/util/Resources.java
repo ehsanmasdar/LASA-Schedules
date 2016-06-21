@@ -3,9 +3,10 @@ package com.asdar.lasaschedules.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalTime;
+import org.joda.time.format.ISODateTimeFormat;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,12 +53,17 @@ public class Resources {
             while (keys.hasNext()) {
                 String key = (String) keys.next();
                 JSONArray scheduleElements = schedules.getJSONObject(key).getJSONArray("schedule");
+                JSONArray dateElements = schedules.getJSONObject(key).getJSONArray("dates");
                 ArrayList<Event> events = new ArrayList<>();
+                ArrayList<String> dates = new ArrayList<>();
                 for (int i = 0; i < scheduleElements.length(); i++) {
                     JSONObject element = scheduleElements.getJSONObject(i);
                     events.add(new Event(LocalTime.parse(element.getString("start")), LocalTime.parse(element.getString("end")), element.getString("name")));
                 }
-                out.add(new Schedule(events, key));
+                for(int i = 0; i < dateElements.length(); i++){
+                    dates.add(dateElements.getString(i));
+                }
+                out.add(new Schedule(events, key,dates));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -66,7 +72,30 @@ public class Resources {
     }
 
     public static Schedule getSchedule(Context c) {
-        return getAllSchedules(c).get(0);
+        ArrayList<Schedule> schedules = getAllSchedules(c);
+        for (Schedule s :  schedules){
+            for (String date : s.getDates()) {
+                if (ISODateTimeFormat.date().print(DateTime.now()).equals(date)) {
+                    return s;
+                }
+            }
+        }
+        for (Schedule s :  schedules){
+            for (String date : s.getDates()) {
+                if (DateTime.now().dayOfWeek().toString().toLowerCase().equals(date)) {
+                    return s;
+                }
+            }
+        }
+        for (Schedule s :  schedules){
+            for (String date : s.getDates()) {
+                if ((DateTime.now().getDayOfWeek() <= 5 && date.equals("weekday")) ||
+                        (DateTime.now().getDayOfWeek() > 5 && date.equals("weekend")) ) {
+                    return s;
+                }
+            }
+        }
+        return null;
     }
 
     public static String convertinputStreamToString(InputStream ists)

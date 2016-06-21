@@ -10,10 +10,12 @@ import java.util.ArrayList;
 public class Schedule {
     private String name;
     private ArrayList<Event> events;
+    private ArrayList<String> dates;
 
-    public Schedule(ArrayList<Event> events, String name) {
+    public Schedule(ArrayList<Event> events, String name, ArrayList<String> dates) {
         this.events = events;
         this.name = name;
+        this.dates = dates;
     }
 
     public ArrayList<Event> getEvents() {
@@ -55,5 +57,14 @@ public class Schedule {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+
+    public ArrayList<String> getDates() {
+        return dates;
+    }
+
+    public void setDates(ArrayList<String> dates) {
+        this.dates = dates;
     }
 }

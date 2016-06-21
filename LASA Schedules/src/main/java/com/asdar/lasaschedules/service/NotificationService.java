@@ -28,7 +28,8 @@ public class NotificationService extends Service {
     NotificationCompat.Builder builder;
     Notification.Builder noncompat;
     private Schedule s;
-    private int id = 1231231;
+    private int id = 1;
+    private String tag = "lasaschedules";
     private ScheduledExecutorService t;
 
     public int onStartCommand(Intent intent, int flags, int startID) {
@@ -50,15 +51,15 @@ public class NotificationService extends Service {
                 s = Resources.getSchedule(getApplicationContext());
                 DateTime now = new DateTime();
 
-                if (s != null && (now.dayOfWeek().get() < 5)) {
+                if (s != null) {
                     Event e = s.getCurrent();
                     if (e != null) {
                         sendNotification(e.name, s.getTimeTillNext().toString());
                     } else {
-                        mNotificationManager.cancel(id);
+                        mNotificationManager.cancel(tag,id);
                     }
                 } else {
-                    mNotificationManager.cancel(id);
+                    mNotificationManager.cancel(tag,id);
                 }
             }
         }, 1, 1, TimeUnit.SECONDS);
@@ -89,7 +90,7 @@ public class NotificationService extends Service {
             noncompat.setColor(getResources().getColor(R.color.primary));
             noncompat.setCategory(Notification.CATEGORY_ALARM);
             NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            mNotificationManager.notify(id, noncompat.build());
+            mNotificationManager.notify(tag,id, noncompat.build());
         } else {
             builder.setContentTitle("In " + place);
             builder.setSmallIcon(R.drawable.ic_stat_notification);
@@ -104,7 +105,7 @@ public class NotificationService extends Service {
             builder.setOngoing(true);
             builder.setOnlyAlertOnce(true);
             NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            mNotificationManager.notify(id, builder.build());
+            mNotificationManager.notify(tag,id, builder.build());
         }
 
     }
@@ -114,7 +115,7 @@ public class NotificationService extends Service {
         super.onDestroy();
         t.shutdown();
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.cancel(id);
+        mNotificationManager.cancel(tag,id);
     }
 
     public class NotificationBinder extends Binder {

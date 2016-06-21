@@ -1,12 +1,10 @@
 package com.asdar.lasaschedules.views;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,7 +21,6 @@ import com.asdar.lasaschedules.util.Event;
 import com.asdar.lasaschedules.util.Resources;
 import com.asdar.lasaschedules.util.Schedule;
 
-import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -106,8 +103,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void run() {
                 s = Resources.getSchedule(getActivity());
-                DateTime now = new DateTime();
-                if (s != null && (now.dayOfWeek().get() < 5)) {
+                if (s != null) {
                     if (s.getCurrent() != null) {
                         isClassOn(true);
                         setTextViews();
@@ -178,7 +174,6 @@ public class HomeFragment extends Fragment {
         // handle item selection
         switch (item.getItemId()) {
             case R.id.action_fullcal:
-                Schedule s = Resources.getSchedule(getActivity());
                 if (s != null) {
                     Intent intent = new Intent(getActivity(), TodayActivity.class);
                     startActivity(intent);

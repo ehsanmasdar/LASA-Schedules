@@ -61,7 +61,7 @@ public class StaticScheduleFragment extends Fragment {
         @Override
         public CharSequence getPageTitle(int position) {
 
-            return Resources.getAllSchedules(getContext()).get(0).getName();
+            return Resources.getAllSchedules(getContext()).get(position).getName();
         }
 
         @Override
