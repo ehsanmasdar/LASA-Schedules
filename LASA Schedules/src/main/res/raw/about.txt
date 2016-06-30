@@ -1,6 +1,6 @@
 <h3>LASA Schedules</h3>
-Version 1.5<br>
-Copyright 2015<br><br>
+Version 2.0<br>
+Copyright 2016<br><br>
 Android coding and design by Ehsan Asdar<br>
 Original concept and iOS App By Oscar Newman <br>
 Notification and app icons courtesy of icons8<br><br>

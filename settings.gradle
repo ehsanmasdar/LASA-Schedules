@@ -1,2 +1,1 @@
-include ':LASA Schedules', 'supportfrag', ':library'
-project(':library').projectDir = new File('showcaseview/library')
+include ':LASA Schedules'

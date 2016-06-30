@@ -44,3 +44,4 @@ gradle/
 gradlew*
 #Other
 LocalApplication.java
+google-services.json
