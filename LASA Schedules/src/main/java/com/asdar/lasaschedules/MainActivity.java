@@ -31,6 +31,7 @@ import com.asdar.lasaschedules.util.Resources;
 import com.asdar.lasaschedules.views.HomeFragment;
 import com.asdar.lasaschedules.views.SettingsFragment;
 import com.asdar.lasaschedules.views.StaticScheduleFragment;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity {
     String[] mDrawerArray;
@@ -87,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         if (s.getString("schedules", null) == null) {
             new InitalLoadTask().execute();
         }
+        FirebaseMessaging.getInstance().subscribeToTopic("updates");
     }
 
     private void selectItem(int position) {
